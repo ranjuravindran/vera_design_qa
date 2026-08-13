@@ -1,0 +1,35 @@
+name: design_qa
+description: >
+  Debug-only visual overlay for fixing design fidelity issues directly on a
+  running Flutter app, with export to source-code patches. Zero release impact.
+version: 0.1.0
+homepage: https://ranjukr.site
+repository: https://github.com/ranjuravindran/design_qa
+publish_to: none # remove once ready to publish to pub.dev
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  analyzer: ^12.1.0
+  dart_style: ^3.0.1
+  yaml: ^3.1.2
+  path: ^1.9.0
+  args: ^2.5.0
+  collection: ^1.19.0
+  file_picker: ^8.1.2
+  vm_service: ^14.2.5
+  flutter_svg: ^2.0.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  test: ^1.25.0
+
+flutter:
+# Note: assets/icons/ is source material for lib/src/overlay/design_qa_icon_data.dart
+# (embedded as Dart string constants, not declared here) - see that file for why.

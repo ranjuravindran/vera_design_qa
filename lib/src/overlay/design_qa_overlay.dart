@@ -11,6 +11,7 @@ import '../inspector/location_resolver.dart';
 import '../inspector/selection.dart';
 import '../inspector/tracking_probe.dart';
 import 'design_qa_theme.dart';
+import 'device_preset.dart';
 import 'floating_pill.dart';
 import 'inspect_highlight.dart';
 import 'property_sidebar.dart';
@@ -168,10 +169,15 @@ class _DesignQAOverlayState extends State<DesignQAOverlay> {
                           Expanded(
                             child: Stack(
                               children: <Widget>[
-                                IgnorePointer(
-                                  key: _appKey,
-                                  ignoring: inspecting,
-                                  child: widget.child,
+                                Positioned.fill(
+                                  child: _DeviceFrame(
+                                    preset: _controller.devicePreset,
+                                    child: IgnorePointer(
+                                      key: _appKey,
+                                      ignoring: inspecting,
+                                      child: widget.child,
+                                    ),
+                                  ),
                                 ),
                                 if (inspecting)
                                   Positioned.fill(
@@ -261,6 +267,58 @@ class _ChromeContent extends StatelessWidget {
           const ReferenceControls(),
           const FloatingPill(),
         ],
+      ),
+    );
+  }
+}
+
+/// Simulates a real phone screen inside the (desktop-sized) window a
+/// designer is actually running the app in - like Chrome DevTools' device
+/// toolbar - rather than trying to resize the OS window itself to match.
+/// That was tried first and abandoned: getting a window to land on an
+/// exact device size runs straight into real screen-space limits (verified
+/// directly - macOS silently *clamps* a resize that doesn't fit, no error
+/// at all) that a pure-Flutter frame doesn't have to deal with, and it
+/// works identically for every platform this overlay runs on, not just
+/// macOS. Only [child] (the app itself) is framed - the property sidebar
+/// next to this Positioned.fill, and the pill/chrome layered on top of it,
+/// both keep their own independent sizing regardless of the frame.
+class _DeviceFrame extends StatelessWidget {
+  const _DeviceFrame({required this.preset, required this.child});
+
+  final DevicePreset preset;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!preset.isFramed) return child;
+
+    final Size deviceSize = Size(preset.width!, preset.height!);
+    return ColoredBox(
+      // Letterbox background filling whatever space the frame doesn't -
+      // only visible once a preset makes the frame smaller than the pane.
+      color: const Color(0xFF0A0A0A),
+      child: Center(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white24),
+            boxShadow: const <BoxShadow>[
+              BoxShadow(blurRadius: 24, color: Colors.black54, offset: Offset(0, 10)),
+            ],
+          ),
+          child: SizedBox.fromSize(
+            size: deviceSize,
+            // The app now measures and lays out as if this were its real
+            // screen (MediaQuery.size), not just a visual crop - so
+            // responsive breakpoints and text wrapping behave the way they
+            // actually would on that device, not just look approximately
+            // right.
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(size: deviceSize),
+              child: ClipRect(child: child),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -57,7 +57,10 @@ class ColorField extends StatelessWidget {
                     height: 16,
                     decoration: BoxDecoration(
                       color: value,
-                      shape: BoxShape.circle,
+                      // A rounded square, not a circle: matches Figma's own
+                      // fill-swatch shape - reads as "the shape of the fill
+                      // itself" rather than a selection/avatar dot.
+                      borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: Colors.white38),
                     ),
                   ),

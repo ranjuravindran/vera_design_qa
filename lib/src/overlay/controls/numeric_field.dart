@@ -41,7 +41,14 @@ class _NumericFieldState extends State<NumericField> {
   void initState() {
     super.initState();
     _text = TextEditingController(text: _fmt(widget.value));
+    // Given directly to the TextField in build() (not left to auto-create
+    // its own) - previously this field watched a *different*, unconnected
+    // FocusNode that nothing ever actually focused, so the "don't stomp
+    // what the user is typing" check below could never tell whether the
+    // field was really being edited, and commit-on-blur (added below) had
+    // no real focus-loss event to listen for.
     _focusNode = FocusNode();
+    _focusNode.addListener(_handleFocusChange);
   }
 
   @override
@@ -52,8 +59,25 @@ class _NumericFieldState extends State<NumericField> {
     }
   }
 
+  // Commit on blur, not just on Enter: without this, typing a value and
+  // then clicking a different field (rather than pressing Enter first) -
+  // by far the more natural way to move between fields - silently
+  // discarded the edit, and a later rebuild could even revert the box
+  // back to the pre-edit text, making it look like the change never
+  // registered at all.
+  void _handleFocusChange() {
+    if (_focusNode.hasFocus) return;
+    _submit(_text.text);
+  }
+
+  void _submit(String text) {
+    final double? v = double.tryParse(text);
+    if (v != null && v != widget.value) widget.onChanged(v);
+  }
+
   @override
   void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
     _text.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -98,11 +122,25 @@ class _NumericFieldState extends State<NumericField> {
           ),
         ),
         Expanded(
-          child: KeyboardListener(
-            focusNode: _focusNode,
-            onKeyEvent: _handleKey,
+          // Focus, not KeyboardListener: the TextField needs to own
+          // _focusNode directly (for the blur-commit and "is this field
+          // being edited" logic above to mean anything), and a `Focus`
+          // ancestor still gets first refusal on key events a focused
+          // descendant doesn't handle itself - arrow up/down aren't
+          // meaningful to a single-line TextField, so they bubble up here.
+          child: Focus(
+            // A pure key-event interceptor, not a focusable stop of its
+            // own - without these, it would insert an extra, invisible
+            // tab stop before the TextField itself.
+            skipTraversal: true,
+            canRequestFocus: false,
+            onKeyEvent: (FocusNode node, KeyEvent event) {
+              _handleKey(event);
+              return KeyEventResult.ignored;
+            },
             child: TextField(
               controller: _text,
+              focusNode: _focusNode,
               style: const TextStyle(color: Colors.white, fontSize: 13),
               keyboardType: const TextInputType.numberWithOptions(
                   signed: true, decimal: true),
@@ -117,10 +155,7 @@ class _NumericFieldState extends State<NumericField> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               ),
-              onSubmitted: (String text) {
-                final double? v = double.tryParse(text);
-                if (v != null) widget.onChanged(v);
-              },
+              onSubmitted: _submit,
             ),
           ),
         ),

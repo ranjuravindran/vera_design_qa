@@ -9,6 +9,7 @@ import '../render_bridge/adapter.dart';
 import '../render_bridge/edit_value_bridge.dart';
 import '../tokens/token_lint.dart';
 import 'controls/color_field.dart';
+import 'controls/corner_radius_field.dart';
 import 'controls/edge_insets_field.dart';
 import 'controls/numeric_field.dart';
 import 'design_qa_icons.dart';
@@ -327,15 +328,14 @@ class _PropertyRowState extends State<_PropertyRow> {
           control = _placeholder();
         }
       case 'borderRadius':
-        final double radius = value is BorderRadius ? value.topLeft.x : 0;
-        control = NumericField(
-          label: 'Corner radius',
-          value: radius,
-          onChanged: (double v) => _commit(BorderRadius.circular(v)),
-        );
+        final BorderRadius radius = value is BorderRadius ? value : BorderRadius.zero;
+        control = CornerRadiusField(value: radius, onChanged: _commit);
+        // Lints against the top-left corner only - the common case is all
+        // four linked anyway, and this is advisory, not enforced, so it's
+        // a reasonable simplification rather than a real limitation.
         lint = lintNumeric(
           category: TokenCategory.radius,
-          value: radius,
+          value: radius.topLeft.x,
           config: controller.config,
           onApply: (double v) => _commit(BorderRadius.circular(v)),
         );

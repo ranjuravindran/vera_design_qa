@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../config/design_qa_config.dart';
 import '../inspector/selection.dart';
+import '../overlay/device_preset.dart';
 import '../render_bridge/adapter_registry.dart';
 import '../render_bridge/reapply_scheduler.dart';
 import 'edit_session.dart';
@@ -69,6 +70,16 @@ class DesignQAController extends ChangeNotifier {
   double propertyPanelWidth = 300;
   void setPropertyPanelWidth(double value) {
     propertyPanelWidth = value.clamp(240, 480);
+    notifyListeners();
+  }
+
+  /// The simulated device size, applied to the app's own content only -
+  /// never the property panel, which always keeps [propertyPanelWidth]
+  /// regardless. Defaults to a real phone size (not "Responsive") so a
+  /// design review starts out looking like a phone, not a desktop window.
+  DevicePreset devicePreset = DevicePreset.galaxyS22Ultra;
+  void setDevicePreset(DevicePreset value) {
+    devicePreset = value;
     notifyListeners();
   }
 

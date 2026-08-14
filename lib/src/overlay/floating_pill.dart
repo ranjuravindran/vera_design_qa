@@ -5,6 +5,7 @@ import '../core/design_qa_controller.dart';
 import '../core/design_qa_scope.dart';
 import '../export/exporter.dart';
 import 'design_qa_icons.dart';
+import 'device_preset.dart';
 import 'overlay_dialog.dart';
 
 /// The always-visible entry point to everything else: draggable, remembers
@@ -31,6 +32,14 @@ class _FloatingPillState extends State<FloatingPill> {
       return;
     }
     controller.cycleReferenceBlend();
+  }
+
+  Future<void> _handleDevicePreset(BuildContext context, DesignQAController controller) async {
+    final DevicePreset? picked = await showOverlayDialog<DevicePreset>(
+      context: context,
+      builder: (BuildContext context) => _DevicePickerDialog(current: controller.devicePreset),
+    );
+    if (picked != null) controller.setDevicePreset(picked);
   }
 
   Future<void> _handleExport(BuildContext context, DesignQAController controller) async {
@@ -103,6 +112,12 @@ class _FloatingPillState extends State<FloatingPill> {
                 },
               ),
               const _PillDivider(),
+              _PillButton(
+                icon: const Icon(Icons.smartphone_rounded, color: Colors.white, size: 18),
+                tooltip: 'Preview at device size: ${controller.devicePreset.label}',
+                active: controller.devicePreset.isFramed,
+                onTap: () => _handleDevicePreset(context, controller),
+              ),
               _PillButton(
                 icon: const DesignQAIconWidget(DesignQAIcon.route, size: 20),
                 tooltip: 'Jump to screen',
@@ -183,6 +198,64 @@ class _PillDivider extends StatelessWidget {
       height: 24,
       margin: const EdgeInsets.symmetric(horizontal: 2),
       color: Colors.white12,
+    );
+  }
+}
+
+class _DevicePickerDialog extends StatelessWidget {
+  const _DevicePickerDialog({required this.current});
+  final DevicePreset current;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFF2A2A2A),
+      borderRadius: BorderRadius.circular(10),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        width: 220,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.fromLTRB(14, 12, 14, 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Preview at device size',
+                  style: TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+            for (final DevicePreset preset in DevicePreset.values)
+              InkWell(
+                onTap: () => OverlayDialog.of<DevicePreset>(context).pop(preset),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 18,
+                        child: preset == current
+                            ? const Icon(Icons.check_rounded, color: Color(0xFF2962FF), size: 16)
+                            : null,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        preset.label,
+                        style: TextStyle(
+                          color: preset == current ? Colors.white : Colors.white70,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            const SizedBox(height: 6),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -22,6 +22,7 @@ import 'design_qa_icon_data.dart';
 enum DesignQAIcon {
   touch('touch'),
   route('route'),
+  devicePreview('device_preview'),
   imageReference('image_reference'),
   export('export'),
   close('close'),

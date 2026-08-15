@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../core/design_qa_controller.dart';
@@ -118,60 +117,4 @@ class _DifferencePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DifferencePainter oldDelegate) => oldDelegate.image != image;
-}
-
-/// Floating control strip for opacity/scale, shown alongside the pill
-/// whenever a reference image is loaded and active.
-class ReferenceControls extends StatelessWidget {
-  const ReferenceControls({super.key});
-
-  Future<void> _pickImage(DesignQAController controller) async {
-    final FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: <String>['png']);
-    final String? path = result?.files.single.path;
-    if (path != null) controller.setReferenceImage(path);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final DesignQAController controller = DesignQAScope.of(context);
-    if (controller.referenceBlend == ReferenceBlendState.off) return const SizedBox.shrink();
-    return Positioned(
-      left: 16,
-      right: 16,
-      bottom: 16,
-      child: Material(
-        color: const Color(0xEE1E1E1E),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.folder_open, color: Colors.white70, size: 18),
-                tooltip: 'Load PNG',
-                onPressed: () => _pickImage(controller),
-              ),
-              const Text('Opacity', style: TextStyle(color: Colors.white70, fontSize: 11)),
-              Expanded(
-                child: Slider(
-                  value: controller.referenceOpacity,
-                  onChanged: controller.setReferenceOpacity,
-                ),
-              ),
-              const Text('Scale', style: TextStyle(color: Colors.white70, fontSize: 11)),
-              Expanded(
-                child: Slider(
-                  value: controller.referenceScale,
-                  min: 0.25,
-                  max: 3,
-                  onChanged: controller.setReferenceScale,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

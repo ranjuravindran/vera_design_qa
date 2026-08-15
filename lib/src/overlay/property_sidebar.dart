@@ -4,6 +4,7 @@ import '../core/design_qa_controller.dart';
 import '../core/design_qa_scope.dart';
 import 'design_qa_icons.dart';
 import 'property_panel.dart';
+import 'reference_panel.dart';
 
 /// A visible seam between the app's own content and design_qa's panel -
 /// without it the two dark-ish surfaces can blend together with nothing
@@ -68,7 +69,15 @@ class _SidebarContent extends StatelessWidget {
             ),
             SizedBox(
               width: controller.propertyPanelWidth,
-              child: controller.selection == null ? const _EmptyState() : const PropertyPanel(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  if (controller.referenceImagePath != null) const ReferencePanel(),
+                  Expanded(
+                    child: controller.selection == null ? const _EmptyState() : const PropertyPanel(),
+                  ),
+                ],
+              ),
             ),
           ],
         );

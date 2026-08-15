@@ -95,17 +95,46 @@ class DesignQAController extends ChangeNotifier {
   double referenceScale = 1.0;
   ReferenceBlendState referenceBlend = ReferenceBlendState.off;
 
+  // Remembers the last non-off blend mode so toggling visibility back on
+  // (from the sidebar's Visible switch) restores whichever mode - Normal or
+  // Difference - was showing before, instead of always resetting to Normal.
+  ReferenceBlendState _lastReferenceBlend = ReferenceBlendState.opacity;
+
   void cycleReferenceBlend() {
     referenceBlend = switch (referenceBlend) {
       ReferenceBlendState.off => ReferenceBlendState.opacity,
       ReferenceBlendState.opacity => ReferenceBlendState.difference,
       ReferenceBlendState.difference => ReferenceBlendState.off,
     };
+    if (referenceBlend != ReferenceBlendState.off) _lastReferenceBlend = referenceBlend;
+    notifyListeners();
+  }
+
+  void setReferenceVisible(bool visible) {
+    if (visible) {
+      referenceBlend = _lastReferenceBlend;
+    } else {
+      if (referenceBlend != ReferenceBlendState.off) _lastReferenceBlend = referenceBlend;
+      referenceBlend = ReferenceBlendState.off;
+    }
+    notifyListeners();
+  }
+
+  void setReferenceBlendMode(ReferenceBlendState mode) {
+    referenceBlend = mode;
+    _lastReferenceBlend = mode;
     notifyListeners();
   }
 
   void setReferenceImage(String? path) {
     referenceImagePath = path;
+    notifyListeners();
+  }
+
+  void removeReferenceImage() {
+    referenceImagePath = null;
+    referenceBlend = ReferenceBlendState.off;
+    referenceOffset = Offset.zero;
     notifyListeners();
   }
 

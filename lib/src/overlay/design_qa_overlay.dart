@@ -264,7 +264,6 @@ class _ChromeContent extends StatelessWidget {
         children: <Widget>[
           if (!controller.trackingEnabled) const TrackingWarningBanner(),
           if (controller.routeJumperOpen) const RouteJumperSheet(),
-          const ReferenceControls(),
           const FloatingPill(),
         ],
       ),

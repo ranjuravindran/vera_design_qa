@@ -19,6 +19,7 @@ class FloatingPill extends StatefulWidget {
 
 class _FloatingPillState extends State<FloatingPill> {
   final GlobalKey _dragHandleKey = GlobalKey();
+  bool _devicePickerOpen = false;
 
   Future<void> _handleReference(DesignQAController controller) async {
     if (controller.referenceImagePath == null) {
@@ -35,10 +36,13 @@ class _FloatingPillState extends State<FloatingPill> {
   }
 
   Future<void> _handleDevicePreset(BuildContext context, DesignQAController controller) async {
+    setState(() => _devicePickerOpen = true);
     final DevicePreset? picked = await showOverlayDialog<DevicePreset>(
       context: context,
       builder: (BuildContext context) => _DevicePickerDialog(current: controller.devicePreset),
     );
+    if (!mounted) return;
+    setState(() => _devicePickerOpen = false);
     if (picked != null) controller.setDevicePreset(picked);
   }
 
@@ -113,9 +117,9 @@ class _FloatingPillState extends State<FloatingPill> {
               ),
               const _PillDivider(),
               _PillButton(
-                icon: const Icon(Icons.smartphone_rounded, color: Colors.white, size: 18),
+                icon: const DesignQAIconWidget(DesignQAIcon.devicePreview, size: 20),
                 tooltip: 'Preview at device size: ${controller.devicePreset.label}',
-                active: controller.devicePreset.isFramed,
+                active: _devicePickerOpen,
                 onTap: () => _handleDevicePreset(context, controller),
               ),
               _PillButton(

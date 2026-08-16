@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoApp;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +11,7 @@ import '../inspector/geometry_hit_test.dart';
 import '../inspector/location_resolver.dart';
 import '../inspector/selection.dart';
 import '../inspector/tracking_probe.dart';
+import 'debug_mode_badge.dart';
 import 'design_qa_theme.dart';
 import 'device_preset.dart';
 import 'floating_pill.dart';
@@ -48,6 +50,40 @@ class _DesignQAOverlayState extends State<DesignQAOverlay> {
     _focusNode = FocusNode(skipTraversal: true);
     Exporter.registerVmServiceExtension();
     _loadConfig();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _probeAppName());
+  }
+
+  // Reads the wrapped app's own declared title straight from its
+  // MaterialApp/CupertinoApp/WidgetsApp, for the "Debug Mode: <App Name>"
+  // badge - not from `context` (an ancestor of chrome, not of `widget.child`
+  // - see `findDescendantNavigatorState` in route_jumper.dart for the same
+  // sibling-vs-descendant pitfall), but from `_appKey`'s own context, which
+  // sits directly above `widget.child` in the tree and is only available
+  // once the first frame has actually mounted it.
+  void _probeAppName() {
+    final BuildContext? appContext = _appKey.currentContext;
+    if (appContext == null || !mounted) return;
+    String? title;
+    void visit(Element element) {
+      if (title != null) return;
+      final Widget w = element.widget;
+      if (w is MaterialApp && (w.title?.isNotEmpty ?? false)) {
+        title = w.title;
+        return;
+      }
+      if (w is CupertinoApp && (w.title?.isNotEmpty ?? false)) {
+        title = w.title;
+        return;
+      }
+      if (w is WidgetsApp && (w.title?.isNotEmpty ?? false)) {
+        title = w.title;
+        return;
+      }
+      element.visitChildren(visit);
+    }
+
+    appContext.visitChildElements(visit);
+    if (title != null) _controller.setAppName(title);
   }
 
   @override
@@ -262,6 +298,7 @@ class _ChromeContent extends StatelessWidget {
       animation: controller,
       builder: (BuildContext context, Widget? _) => Stack(
         children: <Widget>[
+          const DebugModeBadge(),
           if (!controller.trackingEnabled) const TrackingWarningBanner(),
           if (controller.routeJumperOpen) const RouteJumperSheet(),
           const FloatingPill(),

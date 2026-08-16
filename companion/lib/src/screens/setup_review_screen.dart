@@ -1,8 +1,10 @@
 import 'package:design_qa/companion_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../companion_controller.dart';
+import '../theme.dart';
 
 class SetupReviewScreen extends StatefulWidget {
   const SetupReviewScreen({super.key, required this.controller});
@@ -30,19 +32,30 @@ class _SetupReviewScreenState extends State<SetupReviewScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Text('Ready to set up', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 6),
-            Text(
-              plan.projectRoot.split('/').last,
-              style: const TextStyle(fontSize: 13, color: Colors.black54),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text(
+                  'Ready to set up',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textDefault),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  plan.projectRoot.split('/').last,
+                  style: const TextStyle(fontSize: 12, color: AppColors.textSubtle),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
 
             if (plan.entryPointCandidates.length > 1) _EntryPointPicker(controller: widget.controller, plan: plan),
 
             _StepCard(
-              icon: blocked ? Icons.error_outline : Icons.check_circle_outline,
-              iconColor: blocked ? Colors.orange : Colors.green,
+              leading: Icon(
+                blocked ? Icons.error_outline : Icons.check_circle_outline,
+                color: blocked ? Colors.orange : Colors.green,
+                size: 16,
+              ),
               title: switch (outcome) {
                 WrapAlreadyDone() => 'Review tool is already turned on.',
                 WrapApplied() => "I'll add one line to your app so the review tool can turn on.",
@@ -66,14 +79,12 @@ class _SetupReviewScreenState extends State<SetupReviewScreen> {
 
             const SizedBox(height: 10),
             _StepCard(
-              icon: Icons.palette_outlined,
-              iconColor: Colors.blueGrey,
+              leading: SvgPicture.asset('assets/icons/settings_dots.svg', width: 16, height: 16),
               title: plan.configSummary,
             ),
             const SizedBox(height: 10),
             _StepCard(
-              icon: Icons.settings_outlined,
-              iconColor: Colors.blueGrey,
+              leading: SvgPicture.asset('assets/icons/sync.svg', width: 16, height: 16),
               title: plan.pubspecAssetUpdate == null
                   ? 'Your app is already registered correctly.'
                   : "I'll register one file so it works on a real phone.",
@@ -84,7 +95,7 @@ class _SetupReviewScreenState extends State<SetupReviewScreen> {
               const Text(
                 "This app can't turn on the review tool automatically. Add the line above yourself, "
                 "then reopen this app.",
-                style: TextStyle(fontSize: 13, color: Colors.black54),
+                style: TextStyle(fontSize: 13, color: AppColors.textSubtle),
               )
             else
               FilledButton(
@@ -127,15 +138,13 @@ class _EntryPointPicker extends StatelessWidget {
 
 class _StepCard extends StatelessWidget {
   const _StepCard({
-    required this.icon,
-    required this.iconColor,
+    required this.leading,
     required this.title,
     this.trailing,
     this.detail,
   });
 
-  final IconData icon;
-  final Color iconColor;
+  final Widget leading;
   final String title;
   final Widget? trailing;
   final String? detail;
@@ -143,24 +152,25 @@ class _StepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AppColors.surfaceCanvas,
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Icon(icon, color: iconColor, size: 20),
-            const SizedBox(width: 10),
+            leading,
+            const SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(title, style: const TextStyle(fontSize: 14)),
+                  Text(title, style: const TextStyle(fontSize: 12, color: AppColors.textDefault)),
                   if (detail != null && detail!.isNotEmpty && trailing == null)
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(
                         detail!,
-                        style: const TextStyle(fontSize: 12, color: Colors.black54, fontFamily: 'monospace'),
+                        style: const TextStyle(fontSize: 12, color: AppColors.textSubtle, fontFamily: 'monospace'),
                       ),
                     ),
                 ],

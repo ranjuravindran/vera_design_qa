@@ -1,8 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../companion_controller.dart';
+import '../theme.dart';
+import '../widgets/icon_badge.dart';
 
 const String _recentKey = 'recent_projects';
 
@@ -34,6 +37,12 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
     await prefs.setStringList(_recentKey, updated);
   }
 
+  Future<void> _clearRecent() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_recentKey);
+    setState(() => _recent = <String>[]);
+  }
+
   Future<void> _choose() async {
     final String? path = await FilePicker.platform.getDirectoryPath(
       dialogTitle: "Choose your app's folder",
@@ -57,15 +66,19 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
               child: Image.asset('assets/icon/app_icon.png', width: 84, height: 84, fit: BoxFit.cover),
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Design QA',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+              style: GoogleFonts.spaceGrotesk(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.brandTitle,
+              ),
             ),
             const SizedBox(height: 8),
             const Text(
               "Pick the folder for the app you want to review — the one with pubspec.yaml in it.",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.black54, height: 1.4),
+              style: TextStyle(fontSize: 12, color: AppColors.textSubtle, height: 1.4),
             ),
             const SizedBox(height: 24),
             FilledButton.icon(
@@ -78,24 +91,59 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
             ),
             if (_recent.isNotEmpty) ...<Widget>[
               const SizedBox(height: 28),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Recent', style: TextStyle(fontSize: 12, color: Colors.black45)),
+              Row(
+                children: <Widget>[
+                  const Expanded(
+                    child: Text('Recent', style: TextStyle(fontSize: 12, color: AppColors.textSubtle)),
+                  ),
+                  GestureDetector(
+                    onTap: _clearRecent,
+                    child: const Text(
+                      'Clear All',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.accent),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 6),
               for (final String path in _recent)
                 Card(
                   margin: const EdgeInsets.only(bottom: 6),
-                  child: ListTile(
-                    dense: true,
-                    leading: const Icon(Icons.folder_outlined, size: 18),
-                    title: Text(path.split('/').last, style: const TextStyle(fontSize: 13)),
-                    subtitle: Text(path, style: const TextStyle(fontSize: 11)),
+                  color: AppColors.surfaceCanvas,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
                     onTap: () async {
                       await _remember(path);
                       if (!mounted) return;
                       await widget.controller.pickProject(path);
                     },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        children: <Widget>[
+                          const IconBadge(icon: Icons.folder_outlined),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  path.split('/').last,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textDefault,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(path, style: const TextStyle(fontSize: 10, color: AppColors.textSubtle)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
             ],

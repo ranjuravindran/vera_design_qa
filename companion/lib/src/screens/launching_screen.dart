@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../companion_controller.dart';
+import '../theme.dart';
 
 class LaunchingScreen extends StatelessWidget {
   const LaunchingScreen({super.key, required this.controller});
@@ -16,20 +17,20 @@ class LaunchingScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             const SizedBox(
-              width: 28,
-              height: 28,
-              child: CircularProgressIndicator(strokeWidth: 2.5),
+              width: 48,
+              height: 48,
+              child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.blue),
             ),
             const SizedBox(height: 20),
             Text(
-              messages.isEmpty ? 'Starting...' : messages.last,
+              messages.isEmpty ? 'Building your app...' : messages.last,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textDefault),
             ),
             const SizedBox(height: 8),
             const Text(
               'First time takes a minute or two.',
-              style: TextStyle(fontSize: 12, color: Colors.black45),
+              style: TextStyle(fontSize: 12, color: AppColors.textSubtle),
             ),
           ],
         ),

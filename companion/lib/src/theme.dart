@@ -12,6 +12,20 @@ class AppColors {
   static const Color cream = Color(0xFFFFEFC7); // pencil wood
   static const Color indigo = Color(0xFF32397E); // inner triangle
   static const Color ink = Color(0xFF20244A); // pencil silhouette
+
+  // Design-system pass (Figma, Aug 2026): a punchier accent for primary
+  // actions and links, kept separate from the softer icon-derived [blue]
+  // above - that one stays as-is for decorative bits (the launching-screen
+  // progress ring) that the Figma update deliberately left untouched.
+  static const Color accent = Color(0xFF2962FF);
+  static const Color brandTitle = Color(0xFF004195); // "Design QA" wordmark only
+  static const Color textDefault = Color(0xFF14162E);
+  static const Color textSubtle = Color(0xFF495064);
+  static const Color textMuted = Color(0xFF99A1B8);
+  static const Color surfaceCanvas = Color(0xFFF1F3F8);
+  static const Color blueTint = Color(0xFFEEF5FD);
+  static const Color greenTint = Color(0xFFE9F7EA);
+  static const Color critical = Color(0xFFAB0202);
 }
 
 ThemeData buildAppTheme() {
@@ -33,7 +47,10 @@ ThemeData buildAppTheme() {
       margin: EdgeInsets.zero,
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(backgroundColor: AppColors.blue, foregroundColor: Colors.white),
+      style: FilledButton.styleFrom(backgroundColor: AppColors.accent, foregroundColor: Colors.white),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: AppColors.accent),
     ),
   );
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../companion_controller.dart';
 import '../process/device_discovery.dart';
+import '../theme.dart';
+import '../widgets/icon_badge.dart';
 
 class DeviceScreen extends StatelessWidget {
   const DeviceScreen({super.key, required this.controller});
@@ -18,12 +20,22 @@ class DeviceScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Text('Connect your phone', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            const Text(
-              "Plug your Android phone in with a USB cable. If this is the first time, "
-              "you'll need to turn on one setting.",
-              style: TextStyle(fontSize: 14, color: Colors.black54, height: 1.4),
+            const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Connect your phone',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textDefault),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  "Plug your Android phone in with a USB cable. If this is the first time, "
+                  "you'll need to turn on one setting.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12, color: AppColors.textSubtle, height: 1.4),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             const _UsbDebuggingInstructions(),
@@ -40,24 +52,50 @@ class DeviceScreen extends StatelessWidget {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       ),
                       SizedBox(height: 12),
-                      Text('Looking for your phone...', style: TextStyle(fontSize: 13, color: Colors.black54)),
+                      Text('Looking for your phone...', style: TextStyle(fontSize: 13, color: AppColors.textSubtle)),
                     ],
                   ),
                 ),
               )
             else ...<Widget>[
-              const Text('Found:', style: TextStyle(fontSize: 12, color: Colors.black45)),
+              const Text('Found:', style: TextStyle(fontSize: 12, color: AppColors.textSubtle)),
               const SizedBox(height: 6),
               for (final DeviceInfo device in devices)
                 Card(
                   margin: const EdgeInsets.only(bottom: 8),
-                  child: ListTile(
-                    leading: Icon(_iconFor(device)),
-                    title: Text(device.name),
-                    subtitle: Text(device.emulator ? 'Virtual device' : 'Connected device'),
-                    trailing: FilledButton(
-                      onPressed: () => controller.launchOn(device),
-                      child: const Text('Use this'),
+                  color: AppColors.surfaceCanvas,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: <Widget>[
+                        IconBadge(icon: _iconFor(device)),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                device.name,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textDefault,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                device.emulator ? 'Virtual device' : 'Connected device',
+                                style: const TextStyle(fontSize: 10, color: AppColors.textSubtle),
+                              ),
+                            ],
+                          ),
+                        ),
+                        FilledButton(
+                          onPressed: () => controller.launchOn(device),
+                          child: const Text('Use this'),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -84,13 +122,16 @@ class _UsbDebuggingInstructions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blue.withValues(alpha: 0.06),
+      color: AppColors.blueTint,
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const <Widget>[
-            Text('Turning on that setting (only needed once):', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+            Text(
+              'Turning on that setting (only needed once):',
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textDefault),
+            ),
             SizedBox(height: 8),
             _Step(number: 1, text: 'On your phone: Settings → About phone'),
             _Step(number: 2, text: 'Tap "Build number" 7 times in a row'),
@@ -117,9 +158,14 @@ class _Step extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             width: 18,
-            child: Text('$number.', style: const TextStyle(fontSize: 12, color: Colors.black54)),
+            child: Text('$number.', style: const TextStyle(fontSize: 12, color: AppColors.textMuted)),
           ),
-          Expanded(child: Text(text, style: const TextStyle(fontSize: 12.5, height: 1.4))),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 12.5, height: 1.4, color: AppColors.textDefault),
+            ),
+          ),
         ],
       ),
     );

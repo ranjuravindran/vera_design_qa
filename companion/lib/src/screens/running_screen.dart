@@ -2,6 +2,8 @@ import 'package:design_qa/companion_api.dart';
 import 'package:flutter/material.dart';
 
 import '../companion_controller.dart';
+import '../theme.dart';
+import '../widgets/icon_badge.dart';
 
 class RunningScreen extends StatelessWidget {
   const RunningScreen({super.key, required this.controller});
@@ -20,37 +22,53 @@ class RunningScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                const Icon(Icons.check_circle, color: Colors.green, size: 32),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    'Running on ${controller.selectedDevice?.name ?? "your device"}',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        'Running on ${controller.selectedDevice?.name ?? "your device"}',
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textDefault),
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'On your phone: tap the floating dot, then Inspect, then tap anything you want to fix.',
+                        style: TextStyle(fontSize: 12, color: AppColors.textSubtle, height: 1.4),
+                      ),
+                    ],
                   ),
                 ),
-                TextButton(onPressed: controller.stopSession, child: const Text('Stop')),
+                OutlinedButton(
+                  onPressed: controller.stopSession,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.critical,
+                    side: const BorderSide(color: AppColors.critical),
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text('Stop'),
+                ),
               ],
-            ),
-            const SizedBox(height: 6),
-            const Text(
-              'On your phone: tap the floating dot, then Inspect, then tap anything you want to fix.',
-              style: TextStyle(fontSize: 13, color: Colors.black54, height: 1.4),
             ),
             const SizedBox(height: 20),
             Text(
               edits.isEmpty ? 'No changes yet' : '${edits.length} change${edits.length == 1 ? '' : 's'}',
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textDefault),
             ),
             const SizedBox(height: 8),
             if (edits.isEmpty)
-              const Card(
-                child: Padding(
+              Card(
+                color: AppColors.surfaceCanvas,
+                child: const Padding(
                   padding: EdgeInsets.all(20),
                   child: Center(
                     child: Text(
                       'Changes you make on your phone will show up here.',
-                      style: TextStyle(fontSize: 13, color: Colors.black45),
+                      style: TextStyle(fontSize: 13, color: AppColors.textSubtle),
                     ),
                   ),
                 ),
@@ -64,13 +82,35 @@ class RunningScreen extends StatelessWidget {
                     for (final EditRecord e in edits.reversed)
                       Card(
                         margin: const EdgeInsets.only(bottom: 6),
-                        child: ListTile(
-                          dense: true,
-                          leading: const Icon(Icons.edit_outlined, size: 16),
-                          title: Text(_friendlyDescription(e), style: const TextStyle(fontSize: 13)),
-                          subtitle: Text(
-                            '${e.key.file.split('/').last}, line ${e.key.line}',
-                            style: const TextStyle(fontSize: 11),
+                        color: AppColors.surfaceCanvas,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            children: <Widget>[
+                              const IconBadge(icon: Icons.edit_outlined),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      _friendlyDescription(e),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textDefault,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '${e.key.file.split('/').last}, line ${e.key.line}',
+                                      style: const TextStyle(fontSize: 10, color: AppColors.textSubtle),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -80,7 +120,7 @@ class RunningScreen extends StatelessWidget {
             const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: edits.isEmpty ? null : controller.saveChanges,
-              icon: const Icon(Icons.save_outlined),
+              icon: const Icon(Icons.save_outlined, size: 16),
               label: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Text('Save my changes'),
@@ -125,13 +165,13 @@ class _SavedSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool ok = result.filesWritten.isNotEmpty;
     return Card(
-      color: ok ? Colors.green.withValues(alpha: 0.06) : Colors.orange.withValues(alpha: 0.08),
+      color: ok ? AppColors.greenTint : Colors.orange.withValues(alpha: 0.08),
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(12),
         child: Row(
           children: <Widget>[
             Icon(ok ? Icons.check_circle_outline : Icons.info_outline, size: 18, color: ok ? Colors.green : Colors.orange),
-            const SizedBox(width: 10),
+            const SizedBox(width: 7),
             Expanded(
               child: Text(
                 ok
@@ -139,7 +179,7 @@ class _SavedSummary extends StatelessWidget {
                         '${result.editedFileCount == 1 ? '' : 's'} changed. Hand that folder to whoever '
                         'is building the app (or paste it to Claude Code and ask it to apply the changes).'
                     : "Couldn't save automatically. ${result.notes.isNotEmpty ? result.notes.first : ''}",
-                style: const TextStyle(fontSize: 12.5, height: 1.4),
+                style: const TextStyle(fontSize: 10, height: 1.4, color: AppColors.textDefault),
               ),
             ),
           ],

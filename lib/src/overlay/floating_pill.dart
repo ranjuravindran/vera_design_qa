@@ -60,7 +60,16 @@ class _FloatingPillState extends State<FloatingPill> {
         title: Text(title),
         content: Text(message),
         actions: <Widget>[
-          TextButton(onPressed: () => OverlayDialog.of<void>(context).pop(), child: const Text('OK')),
+          TextButton(
+            onPressed: () => OverlayDialog.of<void>(context).pop(),
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xFF00A6FF).withValues(alpha: 0.1),
+              foregroundColor: const Color(0xFF00A6FF),
+              fixedSize: const Size(120, 36),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            ),
+            child: const Text('OK'),
+          ),
         ],
       ),
     );
@@ -88,11 +97,12 @@ class _FloatingPillState extends State<FloatingPill> {
       child: Material(
         elevation: 8,
         color: const Color(0xFF1E1E1E),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          padding: const EdgeInsets.all(8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            spacing: 4,
             children: <Widget>[
               // Two mutually-exclusive tools, Figma-style, rather than one
               // button that silently toggles a hidden mode: Move is what's
@@ -175,7 +185,7 @@ class _PillButton extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
         onTap: onTap,
         child: Container(
           width: 40,
@@ -183,7 +193,7 @@ class _PillButton extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: active ? const Color(0xFF2962FF) : Colors.transparent,
-            shape: BoxShape.circle,
+            borderRadius: BorderRadius.circular(8),
           ),
           child: icon,
         ),
@@ -200,7 +210,6 @@ class _PillDivider extends StatelessWidget {
     return Container(
       width: 1,
       height: 24,
-      margin: const EdgeInsets.symmetric(horizontal: 2),
       color: Colors.white12,
     );
   }

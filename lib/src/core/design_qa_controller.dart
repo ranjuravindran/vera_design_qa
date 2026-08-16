@@ -50,6 +50,16 @@ class DesignQAController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Null until the app-title probe finds the wrapped app's own
+  /// MaterialApp/CupertinoApp/WidgetsApp - null just means the debug-mode
+  /// badge shows without a name suffix, not an error.
+  String? appName;
+  void setAppName(String? value) {
+    if (appName == value) return;
+    appName = value;
+    notifyListeners();
+  }
+
   /// Null until the designer drags the toolbar - [FloatingPill] then
   /// starts bottom-centered, like the toolbar in Figma and most other
   /// design tools, instead of pinned to a fixed pixel offset that doesn't

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../companion_controller.dart';
+import '../theme.dart';
 
 class ErrorScreen extends StatefulWidget {
   const ErrorScreen({super.key, required this.controller});
@@ -20,13 +21,17 @@ class _ErrorScreenState extends State<ErrorScreen> {
         constraints: const BoxConstraints(maxWidth: 460),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Icon(Icons.error_outline, color: Colors.redAccent, size: 40),
+            const Align(
+              alignment: Alignment.center,
+              child: Icon(Icons.error_outline, color: Colors.redAccent, size: 72),
+            ),
             const SizedBox(height: 14),
             Text(
               widget.controller.errorMessage,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textDefault),
             ),
             if (widget.controller.errorDetail.isNotEmpty) ...<Widget>[
               const SizedBox(height: 10),
@@ -39,17 +44,17 @@ class _ErrorScreenState extends State<ErrorScreen> {
                   margin: const EdgeInsets.only(top: 8),
                   padding: const EdgeInsets.all(10),
                   constraints: const BoxConstraints(maxHeight: 200),
-                  decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.04), borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(color: AppColors.blueTint, borderRadius: BorderRadius.circular(12)),
                   child: SingleChildScrollView(
                     child: SelectableText(
                       widget.controller.errorDetail,
-                      style: const TextStyle(fontSize: 11, fontFamily: 'monospace'),
+                      style: const TextStyle(fontSize: 11, fontFamily: 'monospace', color: AppColors.textDefault),
                     ),
                   ),
                 ),
             ],
             const SizedBox(height: 20),
-            OutlinedButton(onPressed: widget.controller.reset, child: const Text('Start over')),
+            FilledButton(onPressed: widget.controller.reset, child: const Text('Start over')),
           ],
         ),
       ),

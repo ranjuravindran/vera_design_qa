@@ -62,9 +62,21 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: SvgPicture.asset('assets/icon/app_icon.svg', width: 84, height: 84),
+            Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: AppColors.iconCardBorder),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(color: AppColors.iconCardBorder.withValues(alpha: 0.6), blurRadius: 24, offset: const Offset(0, 4)),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: SvgPicture.asset('assets/icon/app_icon.svg', width: 96, height: 96, fit: BoxFit.cover),
+              ),
             ),
             const SizedBox(height: 16),
             Text(

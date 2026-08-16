@@ -26,6 +26,7 @@ class AppColors {
   static const Color blueTint = Color(0xFFEEF5FD);
   static const Color greenTint = Color(0xFFE9F7EA);
   static const Color critical = Color(0xFFAB0202);
+  static const Color iconCardBorder = Color(0xFFCCDFF9); // app-icon card border + shadow tint
 }
 
 ThemeData buildAppTheme() {

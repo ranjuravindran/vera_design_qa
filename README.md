@@ -5,6 +5,22 @@ errors directly on a running Flutter app, then export the corrections as
 source patches. Works on any Flutter project, no app-code changes beyond
 one wrapper call.
 
+## Screenshots
+
+Tap a widget in inspect mode and get a live, editable property panel bound
+to its actual `RenderObject` - values that drift from your design tokens are
+flagged inline (the gold rows below):
+
+![Inspect mode with the live property panel](docs/screenshots/overlay_inspect_property_panel.png)
+
+**Vera**, the companion macOS app, automates setup and drives a device so you
+don't have to touch a terminal:
+
+<p>
+  <img src="docs/screenshots/companion_project_picker.png" width="49%" alt="Vera project picker" />
+  <img src="docs/screenshots/companion_running.png" width="49%" alt="Vera running a live session" />
+</p>
+
 ## Install
 
 ```bash

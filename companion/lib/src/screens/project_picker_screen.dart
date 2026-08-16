@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,7 +64,7 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset('assets/icon/app_icon.png', width: 84, height: 84, fit: BoxFit.cover),
+              child: SvgPicture.asset('assets/icon/app_icon.svg', width: 84, height: 84),
             ),
             const SizedBox(height: 16),
             Text(

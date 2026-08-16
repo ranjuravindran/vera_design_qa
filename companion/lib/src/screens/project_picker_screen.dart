@@ -1,7 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../companion_controller.dart';
@@ -62,31 +60,7 @@ class _ProjectPickerScreenState extends State<ProjectPickerScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Container(
-              width: 96,
-              height: 96,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: AppColors.iconCardBorder),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(color: AppColors.iconCardBorder.withValues(alpha: 0.6), blurRadius: 24, offset: const Offset(0, 4)),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
-                child: SvgPicture.asset('assets/icon/app_icon.svg', width: 96, height: 96, fit: BoxFit.cover),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Design QA',
-              style: GoogleFonts.spaceGrotesk(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.brandTitle,
-              ),
-            ),
+            Image.asset('assets/icon/vera_app_display_icon.png', width: 120, height: 120, fit: BoxFit.cover),
             const SizedBox(height: 8),
             const Text(
               "Pick the folder for the app you want to review — the one with pubspec.yaml in it.",

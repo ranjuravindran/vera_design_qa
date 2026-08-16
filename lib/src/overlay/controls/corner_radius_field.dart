@@ -76,7 +76,7 @@ class _CornerRadiusFieldState extends State<CornerRadiusField> {
                   child: Icon(
                     _linked ? Icons.link_rounded : Icons.link_off_rounded,
                     size: 16,
-                    color: _linked ? const Color(0xFF2962FF) : Colors.white38,
+                    color: _linked ? const Color(0xFF009DFF) : Colors.white38,
                   ),
                 ),
               ),

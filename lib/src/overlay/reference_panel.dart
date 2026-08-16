@@ -185,7 +185,7 @@ class _BlendModeOption extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: selected ? const Color(0xFF2962FF) : Colors.transparent,
+            color: selected ? const Color(0xFF009DFF) : Colors.transparent,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(

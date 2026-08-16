@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 ThemeData buildDesignQAChromeTheme() {
   const Color surface = Color(0xFF1E1E1E);
   const Color surfaceRaised = Color(0xFF2A2A2A);
-  const Color accent = Color(0xFF2962FF);
+  const Color accent = Color(0xFF009DFF);
 
   final ColorScheme scheme = ColorScheme.fromSeed(
     seedColor: accent,

@@ -1,5 +1,5 @@
 name: design_qa_companion
-description: "Design QA - automates setup and launch of the design_qa debug overlay on a Flutter app."
+description: "Vera - automates setup and launch of the design_qa debug overlay on a Flutter app."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -68,8 +68,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icon/app_icon.png
-    - assets/icon/app_icon.svg
+    - assets/icon/vera_app_icon.png
+    - assets/icon/vera_app_display_icon.png
     - assets/icons/
 
   # To add assets to your application, add an assets section, like this:

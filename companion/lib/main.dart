@@ -32,7 +32,7 @@ class _CompanionAppState extends State<CompanionApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Design QA',
+      title: 'Vera',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       home: Scaffold(

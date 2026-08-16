@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// Sampled directly from `assets/icon/app_icon.png` (dominant colors by
-/// pixel count, not eyeballed) so the app's theme actually matches its own
-/// icon rather than an arbitrary Material blue.
+/// Icon-derived decorative colors (outer ring, pencil, etc.) predate the
+/// Vera rebrand and are kept as-is for the launching-screen progress ring -
+/// same policy the Aug 2026 design-system pass already established for
+/// this palette.
 class AppColors {
   AppColors._();
 
@@ -13,12 +14,7 @@ class AppColors {
   static const Color indigo = Color(0xFF32397E); // inner triangle
   static const Color ink = Color(0xFF20244A); // pencil silhouette
 
-  // Design-system pass (Figma, Aug 2026): a punchier accent for primary
-  // actions and links, kept separate from the softer icon-derived [blue]
-  // above - that one stays as-is for decorative bits (the launching-screen
-  // progress ring) that the Figma update deliberately left untouched.
-  static const Color accent = Color(0xFF2962FF);
-  static const Color brandTitle = Color(0xFF004195); // "Design QA" wordmark only
+  static const Color accent = Color(0xFF009DFF);
   static const Color textDefault = Color(0xFF14162E);
   static const Color textSubtle = Color(0xFF495064);
   static const Color textMuted = Color(0xFF99A1B8);
@@ -26,7 +22,6 @@ class AppColors {
   static const Color blueTint = Color(0xFFEEF5FD);
   static const Color greenTint = Color(0xFFE9F7EA);
   static const Color critical = Color(0xFFAB0202);
-  static const Color iconCardBorder = Color(0xFFCCDFF9); // app-icon card border + shadow tint
 }
 
 ThemeData buildAppTheme() {

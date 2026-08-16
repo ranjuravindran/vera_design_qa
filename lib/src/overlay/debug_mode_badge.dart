@@ -4,7 +4,7 @@ import '../core/design_qa_controller.dart';
 import '../core/design_qa_scope.dart';
 
 /// Small persistent label identifying the overlay and the app it's
-/// attached to - "Design QA - Debug Mode: `<App Name>`". Pinned to the top
+/// attached to - "Vera - Debug Mode: `<App Name>`". Pinned to the top
 /// right so it never collides with [TrackingWarningBanner] (top left, full
 /// width, and only shown conditionally) or the route jumper (also top
 /// left). Shows without the app name suffix if the title probe in
@@ -16,7 +16,7 @@ class DebugModeBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final DesignQAController controller = DesignQAScope.of(context);
     final String? appName = controller.appName;
-    final String label = appName == null ? 'Design QA - Debug Mode' : 'Design QA - Debug Mode: $appName';
+    final String label = appName == null ? 'Vera - Debug Mode' : 'Vera - Debug Mode: $appName';
 
     return Positioned(
       top: 0,

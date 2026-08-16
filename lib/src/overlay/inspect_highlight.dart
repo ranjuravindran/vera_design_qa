@@ -35,7 +35,7 @@ class InspectHighlight extends StatelessWidget {
               child: IgnorePointer(
                 child: _Chip(
                   text: '${rect.width.toStringAsFixed(0)} × ${rect.height.toStringAsFixed(0)}',
-                  color: const Color(0xFF2962FF),
+                  color: const Color(0xFF009DFF),
                 ),
               ),
             ),
@@ -61,11 +61,11 @@ class _HighlightPainter extends CustomPainter {
     canvas.drawRect(
       rect,
       Paint()
-        ..color = const Color(0xFF2962FF)
+        ..color = const Color(0xFF009DFF)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2,
     );
-    canvas.drawRect(rect, Paint()..color = const Color(0x142962FF));
+    canvas.drawRect(rect, Paint()..color = const Color(0x14009DFF));
   }
 
   @override
@@ -93,7 +93,7 @@ class _Breadcrumb extends StatelessWidget {
                 child: _Chip(
                   text: entry.label,
                   color: entry == selection.breadcrumb.first
-                      ? const Color(0xFF2962FF)
+                      ? const Color(0xFF009DFF)
                       : const Color(0xFF424242),
                 ),
               ),

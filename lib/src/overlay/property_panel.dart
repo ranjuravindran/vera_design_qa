@@ -154,7 +154,7 @@ class _PropertySection extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: isNearest
-                            ? const Color(0xFF2962FF)
+                            ? const Color(0xFF009DFF)
                             : Colors.white24,
                       ),
                     ),
@@ -593,7 +593,7 @@ class _EnumPickerDialog<T extends Enum> extends StatelessWidget {
                       SizedBox(
                         width: 18,
                         child: v == value
-                            ? const Icon(Icons.check_rounded, color: Color(0xFF2962FF), size: 16)
+                            ? const Icon(Icons.check_rounded, color: Color(0xFF009DFF), size: 16)
                             : null,
                       ),
                       const SizedBox(width: 6),

@@ -30,7 +30,7 @@ class TrackingWarningBanner extends StatelessWidget {
               SizedBox(width: 8),
               Flexible(
                 child: Text(
-                  "Can't inspect or edit yet - relaunch this app through the Design QA "
+                  "Can't inspect or edit yet - relaunch this app through the Vera "
                   'app (or add --track-widget-creation if you started it from a terminal).',
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),

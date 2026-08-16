@@ -24,7 +24,7 @@ class YamlWriter {
       out.writeln('  # `static const` Color/double fields - see the reference doc for other');
       out.writeln('  # patterns and how to list them here by hand). Example shape:');
       out.writeln('  # colors:');
-      out.writeln("  #   primary: '#FF2962FF'");
+      out.writeln("  #   primary: '#FF009DFF'");
       out.writeln('  # spacing:');
       out.writeln('  #   md: 16');
       out.writeln('  colors: {}');

@@ -192,7 +192,7 @@ class _PillButton extends StatelessWidget {
           height: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: active ? const Color(0xFF2962FF) : Colors.transparent,
+            color: active ? const Color(0xFF009DFF) : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
           child: icon,
@@ -250,7 +250,7 @@ class _DevicePickerDialog extends StatelessWidget {
                       SizedBox(
                         width: 18,
                         child: preset == current
-                            ? const Icon(Icons.check_rounded, color: Color(0xFF2962FF), size: 16)
+                            ? const Icon(Icons.check_rounded, color: Color(0xFF009DFF), size: 16)
                             : null,
                       ),
                       const SizedBox(width: 6),

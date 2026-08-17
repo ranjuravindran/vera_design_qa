@@ -15,7 +15,7 @@
   <meta property="og:description" content="A live visual overlay for Flutter. Tap any widget on a running app, correct design drift by hand, and export real AST Dart patches.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ranjuravindran.github.io/vera_design_qa/">
-  <meta property="og:image" content="https://ranjuravindran.github.io/vera_design_qa/assets/img/hero-tokens-3d.jpg">
+  <meta property="og:image" content="https://ranjuravindran.github.io/vera_design_qa/assets/img/icon-512.png">
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Fonts & Stylesheet -->
@@ -41,7 +41,7 @@
       </a>
 
       <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="#hero" class="nav-link">Interactive Demo</a>
+        <a href="#top" class="nav-link">Interactive Demo</a>
         <a href="#comparison" class="nav-link">The Workflow</a>
         <a href="#features" class="nav-link">Features</a>
         <a href="#companion" class="nav-link">macOS App</a>
@@ -164,18 +164,8 @@
                 </button>
               </div>
 
-              <!-- Window Chrome & Canvas Stage -->
+              <!-- Window Frame (No fake duplicate titlebars; uses authentic app chrome) -->
               <div class="window-frame">
-                <div class="window-header">
-                  <div class="window-controls">
-                    <span class="dot dot-close"></span>
-                    <span class="dot dot-minimize"></span>
-                    <span class="dot dot-expand"></span>
-                  </div>
-                  <div class="window-title" id="windowTitle">Vera Canvas — Inspect & Property Tuning</div>
-                  <div class="window-badge">Live Overlay</div>
-                </div>
-
                 <div class="window-body">
                   <!-- Panel 1: Inspect -->
                   <div class="tab-panel is-active" id="tab-inspect" role="tabpanel" aria-labelledby="btn-inspect">
@@ -344,7 +334,7 @@
     <!-- ================= CORE FEATURES GRID ================= -->
     <section class="section features-section" id="features">
       <div class="shell">
-        <div class="section-header">
+        <div class="section-header text-center">
           <span class="section-kicker">Engineered for Fidelity</span>
           <h2 class="section-title">Everything you need to ship pixel-perfect UI.</h2>
           <p class="section-desc">
@@ -391,10 +381,10 @@
             </div>
           </div>
 
-          <!-- Feature 3: Design Tokens 3D Highlight -->
+          <!-- Feature 3: Design Tokens (Authentic Screenshot) -->
           <div class="feature-box tilt-card" data-tilt="3">
             <div class="feature-media">
-              <img src="assets/img/hero-tokens-3d.jpg" alt="3D design tokens floating visualization" width="1920" height="1080" loading="lazy">
+              <img src="assets/img/token-lint.webp" alt="Design system token linting in action" width="1400" height="729" loading="lazy">
             </div>
             <div class="feature-info">
               <span class="feature-pill">Design Systems</span>
@@ -410,10 +400,10 @@
             </div>
           </div>
 
-          <!-- Feature 4: AST Patches 3D Highlight -->
+          <!-- Feature 4: AST Patches (Authentic Screenshot) -->
           <div class="feature-box tilt-card" data-tilt="3">
             <div class="feature-media">
-              <img src="assets/img/ast-diff-3d.jpg" alt="AST code transformations to live mobile UI" width="1920" height="1080" loading="lazy">
+              <img src="assets/img/patch-export.webp" alt="AST code unified diff export" width="1400" height="1167" loading="lazy">
             </div>
             <div class="feature-info">
               <span class="feature-pill">AST Code Generation</span>
@@ -440,7 +430,7 @@
             <div class="pill-badge">macOS Companion App</div>
             <h2 class="companion-title">Zero terminal required for designers.</h2>
             <p class="companion-desc">
-              If you’re a designer or product manager who doesn't want to run shell commands, the companion macOS app automates everything:
+              If you’re a designer or product manager who doesn't want to run shell commands, the companion macOS app automates the entire review cycle:
             </p>
             <div class="companion-steps">
               <div class="comp-step">
@@ -468,7 +458,7 @@
 
           <div class="companion-visual">
             <div class="companion-window">
-              <img src="assets/img/companion-project-picker.png" alt="Vera macOS Project Picker" width="1440" height="1200" loading="lazy">
+              <img src="assets/img/companion-live-session.png" alt="Vera macOS Companion Live Session Review" width="1440" height="1200" loading="lazy">
             </div>
           </div>
         </div>
@@ -564,6 +554,7 @@
           </div>
         </div>
 
+        <!-- Call to Action Banner -->
         <div class="cta-banner tilt-card" data-tilt="2">
           <h3>Ready to stop fighting design drift?</h3>
           <p>Vera is open source (MIT). Built for modern Flutter teams and vibe coders.</p>

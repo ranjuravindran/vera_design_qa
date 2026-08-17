@@ -1,6 +1,6 @@
 /* ============================================================
    VERA — Official Landing Page Stylesheet
-   Pixel-Perfect Layout, Seamless Windows, Light/Dark Theme
+   Pixel-Perfect Layout, Authentic Media, Light/Dark Theme
    ============================================================ */
 
 /* ---------- Self-Hosted Fonts ---------- */
@@ -68,6 +68,11 @@
 
   --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.5);
   --shadow-elevated: 0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 157, 255, 0.06);
+
+  --cta-bg: linear-gradient(135deg, rgba(0, 157, 255, 0.16) 0%, rgba(12, 19, 34, 0.75) 100%);
+  --cta-border: rgba(0, 157, 255, 0.35);
+  --cta-title: #f8fafc;
+  --cta-desc: #94a3b8;
 }
 
 [data-theme="light"] {
@@ -102,6 +107,11 @@
 
   --shadow-subtle: 0 4px 20px rgba(11, 18, 32, 0.06);
   --shadow-elevated: 0 15px 40px -10px rgba(11, 18, 32, 0.12), 0 0 20px rgba(0, 136, 223, 0.04);
+
+  --cta-bg: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
+  --cta-border: rgba(0, 140, 230, 0.28);
+  --cta-title: #0b1220;
+  --cta-desc: #475569;
 }
 
 :root {
@@ -211,40 +221,44 @@ p {
   top: 1rem;
 }
 
-/* ---------- Typography & Utility Classes ---------- */
+/* ---------- Typography & Section Headers ---------- */
 .text-center { text-align: center; }
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-header.text-center .section-desc {
+  margin-inline: auto;
+  text-align: center;
+}
 
 .section-kicker {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--signal);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 
 .section-title {
-  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
   font-weight: 800;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
 }
 
 .section-desc {
-  font-size: clamp(0.9rem, 1.35vw, 1.02rem);
+  font-size: clamp(0.92rem, 1.35vw, 1.05rem);
   color: var(--text-secondary);
   max-width: 38rem;
-  margin-inline: auto;
   line-height: 1.5;
 }
 
-.section-header {
-  margin-bottom: 1.75rem;
-}
-
 .section {
-  padding-block: clamp(2.5rem, 4vw, 3.75rem);
+  padding-block: clamp(2.5rem, 4vw, 4rem);
   position: relative;
 }
 
@@ -580,45 +594,6 @@ p {
   flex-direction: column;
 }
 
-.window-header {
-  background: var(--bg-window-chrome);
-  padding: 0.45rem 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border-subtle);
-  flex-shrink: 0;
-}
-
-.window-controls {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-}
-.dot-close { background: #ff5f56; }
-.dot-minimize { background: #ffbd2e; }
-.dot-expand { background: #27c93f; }
-
-.window-title {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.window-badge {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  color: var(--signal);
-  background: rgba(0, 157, 255, 0.12);
-  padding: 0.12rem 0.45rem;
-  border-radius: 3px;
-}
-
 .window-body {
   position: relative;
   background: #000;
@@ -922,7 +897,7 @@ p {
 
 .feature-media {
   background: #000;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 10.5;
   width: 100%;
   overflow: hidden;
   border-bottom: 1px solid var(--border-subtle);
@@ -931,6 +906,7 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: transform 0.4s ease;
 }
 .feature-box:hover .feature-media img {
@@ -990,7 +966,7 @@ p {
   font-weight: bold;
 }
 
-/* ---------- Companion Section ---------- */
+/* ---------- Companion Section (Compact & Well-proportioned) ---------- */
 .companion-section {
   border-top: 1px solid var(--border-subtle);
   background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-main) 100%);
@@ -1002,7 +978,7 @@ p {
   border-radius: var(--radius-lg);
   padding: clamp(1.25rem, 2.5vw, 2rem);
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1fr 1.15fr;
   gap: clamp(1.25rem, 2.5vw, 2.25rem);
   align-items: center;
   box-shadow: var(--shadow-subtle);
@@ -1050,6 +1026,14 @@ p {
   overflow: hidden;
   border: 1px solid var(--border-medium);
   box-shadow: var(--shadow-elevated);
+  aspect-ratio: 16 / 11;
+  background: #000;
+}
+.companion-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
 /* ---------- Proof Section ---------- */
@@ -1207,24 +1191,27 @@ p {
 .note-icon { font-size: 0.95rem; }
 .note-body strong { color: var(--text-primary); }
 
+/* ---------- CTA Banner (Dark & Light Mode Optimized) ---------- */
 .cta-banner {
-  background: linear-gradient(135deg, rgba(0, 157, 255, 0.16) 0%, rgba(12, 19, 34, 0.7) 100%);
-  border: 1px solid rgba(0, 157, 255, 0.35);
+  background: var(--cta-bg);
+  border: 1px solid var(--cta-border);
   border-radius: var(--radius-lg);
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
   text-align: center;
   max-width: 44rem;
   margin-inline: auto;
   box-shadow: 0 15px 40px -15px var(--signal-glow);
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 .cta-banner h3 {
   font-size: clamp(1.4rem, 2.5vw, 1.85rem);
   margin-bottom: 0.4rem;
+  color: var(--cta-title);
 }
 .cta-banner p {
-  color: var(--text-secondary);
-  font-size: 0.88rem;
-  margin-bottom: 1.25rem;
+  color: var(--cta-desc);
+  font-size: 0.9rem;
+  margin-bottom: 1.35rem;
 }
 .cta-banner-actions {
   display: flex;

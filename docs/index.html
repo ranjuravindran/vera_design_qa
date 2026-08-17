@@ -1,426 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vera — fix the design, not the prompt</title>
-<meta name="description" content="A debug-only overlay for Flutter. Tap any widget on the running app, correct it by hand, and export the fix as a real source patch.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vera — Fix the Design, Not the Prompt | Flutter Design QA</title>
+  <meta name="description" content="A live visual overlay for Flutter. Tap any widget on a running app, correct design drift by hand, and export real AST Dart patches. Built for designers and vibe coders.">
 
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<meta name="theme-color" content="#009dff">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b1220">
 
-<meta property="og:title" content="Vera — fix the design, not the prompt">
-<meta property="og:description" content="A debug-only overlay for Flutter. Tap any widget on the running app, correct it by hand, and export the fix as a real source patch.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://ranjuravindran.github.io/vera_design_qa/assets/img/icon-512.png">
-<meta name="color-scheme" content="light">
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:title" content="Vera — Fix the Design, Not the Prompt">
+  <meta property="og:description" content="A live visual overlay for Flutter. Tap any widget on a running app, correct design drift by hand, and export real AST Dart patches.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ranjuravindran.github.io/vera_design_qa/">
+  <meta property="og:image" content="https://ranjuravindran.github.io/vera_design_qa/assets/img/icon-512.png">
+  <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/plexsans-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css">
+  <!-- Fonts & Stylesheet -->
+  <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plexsans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-<header class="site-header">
-  <div class="shell">
-    <a class="lockup" href="#top">
-      <img src="assets/img/vera-logo-horizontal.png" alt="Vera" class="header-logo" decoding="async">
-    </a>
-    <a class="header-link" href="https://github.com/ranjuravindran/vera_design_qa">
-      GitHub
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M6 3h7v7M13 3 3.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-</header>
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="site-header" id="header">
+    <div class="shell header-shell">
+      <a class="brand-link" href="#top" aria-label="Vera Home">
+        <img src="assets/img/vera-logo-horizontal.png" alt="Vera Logo" class="brand-logo" width="136" height="45">
+      </a>
 
-<main id="main">
+      <nav class="site-nav" aria-label="Primary Navigation">
+        <a href="#showcase" class="nav-link">Interactive Demo</a>
+        <a href="#comparison" class="nav-link">The Workflow</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#companion" class="nav-link">macOS App</a>
+        <a href="#quickstart" class="nav-link">Install</a>
+      </nav>
 
-  <!-- ============ HERO ============ -->
-  <div id="top" class="hero">
-    <div class="shell">
-      <div class="hero-copy">
-        <h1>
-          Fix the design,
-          <span class="quiet">not the prompt.</span>
-        </h1>
-        <p class="hero-lede">
-          Vera is a debug-only overlay for Flutter. Tap any widget on the running
-          app, correct it by hand, and export the change as a real source patch.
-          No describing a pixel in English. No waiting on a rebuild.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://github.com/ranjuravindran/vera_design_qa">
-            View on GitHub
-          </a>
-          <a class="btn btn-ghost" href="#start">Install it</a>
-        </div>
-        <p class="hero-meta">Flutter package + macOS companion app · MIT</p>
+      <div class="header-actions">
+        <a class="btn btn-secondary btn-sm" href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        <a class="btn btn-primary btn-sm" href="#quickstart">
+          <span>Get Started</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
+  </header>
 
-    <!-- ============ THE DIFFERENCE LAYER ============ -->
-    <div class="shell">
-      <figure class="difference on-ink">
-        <div class="diff-stage">
-          <img class="layer-base" src="assets/img/diff-a.webp" alt="Vera's inspection canvas showing a Flutter app running on a device frame" width="1600" height="1075" fetchpriority="high" decoding="async">
-          <img class="layer-top" src="assets/img/diff-b.webp" alt="" aria-hidden="true" width="1600" height="1075" decoding="async">
-        </div>
+  <main id="main">
 
-        <div class="diff-controls">
-          <span class="diff-label" id="diff-lo">Build</span>
-          <input class="diff-range" type="range" min="0" max="100" value="35" step="1"
-                 id="diffRange"
-                 aria-label="Difference blend intensity"
-                 aria-describedby="diffCaption">
-          <span class="diff-label">Difference</span>
-          <output class="diff-readout" for="diffRange" id="diffOut">35%</output>
-        </div>
-
-        <figcaption class="diff-caption" id="diffCaption">
-          Two frames of the same screen, subtracted. <strong>99.2% of these pixels are
-          identical</strong> and fall to black. What survives is the only thing that
-          actually changed. That is the whole job: find where the build stops telling
-          the truth about the design.
-        </figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <!-- ============ PROBLEM ============ -->
-  <section class="problem">
-    <div class="shell">
-      <div class="section-head">
-        <h2>You asked for 24. You got 20.</h2>
-        <p>
-          Not wrong enough to catch in review. Wrong enough to feel cheap in the
-          hand. And the loop for fixing it is worse than the bug.
-        </p>
-      </div>
-
-      <ol class="loop">
-        <li>
-          <div>
-            <strong>The screen arrives all at once</strong>
-            <p>AI writes the whole thing in one pass. There is no moment where you
-              were building it component by component, checking each against the file.</p>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero" id="top">
+      <div class="shell">
+        <div class="hero-content">
+          <div class="pill-badge">
+            <span class="pill-dot"></span>
+            <span>Built for Designers & Vibe Coders</span>
           </div>
-        </li>
-        <li>
-          <div>
-            <strong>The comparison step quietly disappears</strong>
-            <p>The Figma-versus-build check used to happen naturally, because you
-              were the one placing every value. Now nobody is holding both.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <strong>Drift ships</strong>
-            <p>Spacing lands at <span class="chip">20 → spacing.lg (24)</span>, a
-              near-miss colour passes for the token, a radius is off by two. Nobody
-              notices until someone opens the app.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <strong>Fixing it means describing a pixel in English</strong>
-            <p>Write the prompt. Wait for the rebuild. Squint. It's closer. Write
-              another prompt. This is the loop Vera deletes.</p>
-          </div>
-        </li>
-      </ol>
 
-      <p class="loop-close">
-        You already know what's wrong. You can see it. Vera lets you just
-        <em>go and fix it</em>, on the running app, and keeps the receipt as code.
-      </p>
-    </div>
-  </section>
+          <h1 class="hero-title">
+            Fix the design.<br>
+            <span class="hero-highlight">Not the prompt.</span>
+          </h1>
 
-  <!-- ============ DEMO VIDEO ============ -->
-  <section class="demo on-ink">
-    <div class="shell">
-      <div class="section-head">
-        <h2>The whole loop, start to finish.</h2>
-        <p>Inspect, select, correct, export. No terminal, no rebuild, no prompt.</p>
-      </div>
-
-      <div class="player" id="player">
-        <video id="demoVideo"
-               poster="assets/img/tap-fix.webp"
-               preload="none"
-               playsinline
-               src="assets/media/vera-demo.mp4"
-               width="1400" height="941"></video>
-        <button class="player-btn" id="playBtn" type="button">
-          <span>
-            <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
-              <path d="M13 7.13a1 1 0 0 1 0 1.74l-11 6.2A1 1 0 0 1 .5 14.2V1.8A1 1 0 0 1 2 .93l11 6.2Z"/>
-            </svg>
-            Play the demo
-          </span>
-        </button>
-      </div>
-      <p class="demo-note" id="demoNote">Sound off · about 30 seconds</p>
-    </div>
-  </section>
-
-  <!-- ============ FEATURES ============ -->
-  <section class="features">
-    <div class="shell">
-      <div class="section-head">
-        <h2>Built for the person who can see the problem.</h2>
-        <p>
-          Every control edits the real widget on the real device. Nothing here is a
-          mockup of your app — it <em>is</em> your app.
-        </p>
-      </div>
-
-      <div class="feature">
-        <div class="feature-canvas">
-          <img src="assets/img/tap-fix.webp" alt="A container selected in inspect mode, with padding, fill and radius editable in the docked property panel" width="1400" height="941" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-panel">
-          <h3>Tap it, then fix it</h3>
-          <p>
-            Turn on inspect and tap anything on screen. You get a live property panel
-            bound to that widget's actual <code>RenderObject</code>: padding, colour,
-            radius, gap, alignment, type. Change a number and the app changes under
-            your finger.
+          <p class="hero-subtitle">
+            A live visual overlay for Flutter. Tap any widget directly on your running app, tune padding, color, and radius by hand, and export clean AST Dart patches back to your codebase. 
+            <strong>No endless prompting. No waiting on rebuilds.</strong>
           </p>
-          <div class="feature-detail">
-            <span>Live mutation</span><span>Real RenderObject</span><span>No rebuild</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="feature">
-        <div class="feature-canvas">
-          <img src="assets/img/overlay.webp" alt="A Figma export pinned over the running screen in difference blend mode, with opacity and scale controls" width="1400" height="941" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-panel">
-          <h3>Put the design on top of the build</h3>
-          <p>
-            Pin your Figma export straight over the running screen. Normal blend to
-            eyeball it, difference blend to make disagreement literally glow. Opacity
-            and scale are yours. It's the comparison step, handed back to you.
-          </p>
-          <div class="feature-detail">
-            <span>Normal + difference</span><span>Opacity</span><span>Scale</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature">
-        <div class="feature-canvas">
-          <img src="assets/img/token-lint.webp" alt="Property panel showing amber lint chips suggesting radius.sm, colors.primary and spacing.xs for off-token values" width="1400" height="729" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-panel">
-          <h3>Off-token values flag themselves</h3>
-          <p>
-            Vera reads your token scale and marks anything that misses it: the amber
-            rows. A radius of 6 where your scale says 4, a colour one hex step off
-            <code>colors.primary</code>. Each one carries its own correction, one tap
-            to apply.
-          </p>
-          <div class="feature-detail">
-            <span>Spacing</span><span>Radius</span><span>Colour</span><span>One-tap apply</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature">
-        <div class="feature-canvas">
-          <img src="assets/img/patch-export.webp" alt="The Vera companion app listing three recorded changes with file names and line numbers, and a Save my changes button" width="1400" height="1167" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-panel">
-          <h3>Export as source, not as notes</h3>
-          <p>
-            Every edit is recorded against the file and line it came from, then written
-            out as an actual patch to your Dart source, parsed and rewritten at the
-            AST level, not string-replaced. Hand the folder to a developer, or paste
-            it to Claude Code and ask it to apply.
-          </p>
-          <div class="feature-detail">
-            <span>AST-level</span><span>File + line</span><span>Plain-language changelog</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature">
-        <div class="feature-canvas">
-          <img src="assets/img/route-jumper.webp" alt="The route jumper open, listing app routes such as /home, /pet/details and /settings with a search field" width="1400" height="941" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-panel">
-          <h3>Jump straight to the screen</h3>
-          <p>
-            Checking the empty state of a screen four taps deep shouldn't cost four
-            taps every time. Vera scans your routes on setup and lets you jump to any
-            of them, arguments included.
-          </p>
-          <div class="feature-detail">
-            <span>Auto-scanned routes</span><span>Searchable</span><span>Passes arguments</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- release proof: the honest form of this claim is the measurement -->
-      <div class="proof on-ink">
-        <div>
-          <h3>It cannot ship to your users.</h3>
-          <p>
-            <code>DesignQA.wrap</code> is a <code>kDebugMode</code> branch. In release
-            and profile builds it returns your widget untouched and the entire overlay
-            is unreachable code, which the Dart AOT compiler removes rather than
-            merely skips. We measured it instead of claiming it.
-          </p>
-        </div>
-        <div>
-          <table class="proof-table">
-            <caption>App.framework · flutter build macos --release</caption>
-            <tbody>
-              <tr><th scope="row">With <code>DesignQA.wrap</code></th><td>6,906,368 bytes</td></tr>
-              <tr><th scope="row">Without</th><td>6,906,368 bytes</td></tr>
-            </tbody>
-          </table>
-          <p class="proof-verdict">Byte-for-byte identical.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ HOW IT WORKS ============ -->
-  <section class="how">
-    <div class="shell">
-      <div class="section-head">
-        <h2>Three commands, then you're inspecting.</h2>
-        <p>Works on any Flutter project. No app-code changes beyond one wrapper call.</p>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <h3>Add the package</h3>
-          <p>A dev dependency. It never enters your release dependency graph.</p>
-        </div>
-        <div class="step">
-          <h3>Wrap one line</h3>
-          <p><code>init</code> finds your <code>main()</code>, shows you the diff, and
-            asks before touching anything. It also pre-fills your token config from
-            whatever colour and spacing constants you already have.</p>
-        </div>
-        <div class="step">
-          <h3>Run and start fixing</h3>
-          <p>Tap the floating dot on your device, hit Inspect, and tap whatever looks
-            wrong.</p>
-        </div>
-      </div>
-
-      <div class="code-block">
-        <pre><code><span class="c"># 1 · add it as a dev dependency</span>
-flutter pub add --dev design_qa
-
-<span class="c"># 2 · wrap your app (shows a diff, asks first)</span>
-dart run design_qa:init
-
-<span class="c"># 3 · run with widget tracking on</span>
-flutter run <span class="p">--track-widget-creation</span></code></pre>
-        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
-      </div>
-
-      <p class="aside-note">
-        <strong><code>--track-widget-creation</code> is not optional.</strong> Without
-        it Vera can't map a tapped widget back to a line in your source, and inspect
-        mode stays off with a banner telling you exactly that.
-      </p>
-
-      <div class="companion">
-        <div>
-          <h3 style="font-size:clamp(1.35rem,2.2vw,1.75rem)">Or skip the terminal entirely</h3>
-          <p style="margin-top:.85rem;color:var(--slate)">
-            The macOS companion app does all three steps for you: point it at a project
-            folder, it works out the entry point, shows you the change it wants to make,
-            picks a device, and launches. When you're done it writes the patches out.
-          </p>
-        </div>
-        <div class="feature-canvas">
-          <img src="assets/img/picker.webp" alt="The Vera macOS companion app project picker, listing recent Flutter projects" width="1200" height="1000" loading="lazy" decoding="async">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ GET STARTED ============ -->
-  <section class="start" id="start">
-    <div class="shell">
-      <div class="start-grid">
-        <div>
-          <h2>Go and fix it.</h2>
-          <p class="start-lede">
-            Vera is open source and early. If you build with AI and care how the result
-            actually looks, it was written for you.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://github.com/ranjuravindran/vera_design_qa">
-              View on GitHub
+          <div class="hero-cta-group">
+            <a class="btn btn-primary btn-lg" href="#quickstart">
+              <span>Install in 30 Seconds</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
-            <a class="btn btn-ghost" href="https://github.com/ranjuravindran/vera_design_qa/issues/new">
-              Send feedback
+            <a class="btn btn-ghost btn-lg" href="#showcase">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M6.5 5.5l4 2.5-4 2.5v-5z" fill="currentColor"/>
+              </svg>
+              <span>See Interactive Demo</span>
             </a>
           </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-icon">⚡</span>
+              <span class="stat-text"><strong>Zero Rebuilds</strong> · Instant property tuning</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">🎯</span>
+              <span class="stat-text"><strong>AST Source Patches</strong> · Not string replaces</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">🛡️</span>
+              <span class="stat-text"><strong>0 KB Release Impact</strong> · Fully tree-shaken</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= INTERACTIVE PRODUCT SHOWCASE ================= -->
+      <div class="shell showcase-shell" id="showcase">
+        <div class="showcase-container">
+
+          <!-- Interactive Tab Nav -->
+          <div class="showcase-tabs" role="tablist" aria-label="Feature Showcase Tabs">
+            <button class="tab-btn is-active" role="tab" aria-selected="true" data-target="tab-inspect" id="btn-inspect">
+              <span class="tab-icon">🔍</span>
+              <span class="tab-name">Inspect & Live Edit</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="tab-diff" id="btn-diff">
+              <span class="tab-icon">📐</span>
+              <span class="tab-name">Figma Diff Overlay</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="tab-tokens" id="btn-tokens">
+              <span class="tab-icon">🎨</span>
+              <span class="tab-name">Token Auto-Lint</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="tab-route" id="btn-route">
+              <span class="tab-icon">⚡</span>
+              <span class="tab-name">Route Jumper</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-target="tab-export" id="btn-export">
+              <span class="tab-icon">📝</span>
+              <span class="tab-name">AST Patch Exporter</span>
+            </button>
+          </div>
+
+          <!-- Window Chrome & Canvas Stage -->
+          <div class="window-frame">
+            <div class="window-header">
+              <div class="window-controls">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-expand"></span>
+              </div>
+              <div class="window-title" id="windowTitle">Vera Canvas — Inspect & Property Tuning</div>
+              <div class="window-badge">Live Debug Session</div>
+            </div>
+
+            <div class="window-body">
+              <!-- Panel 1: Inspect -->
+              <div class="tab-panel is-active" id="tab-inspect" role="tabpanel" aria-labelledby="btn-inspect">
+                <div class="canvas-image-wrap">
+                  <img src="assets/img/canvas-element-selected.png" alt="Vera Live Inspection Mode showing selected Flutter widget and editable properties panel" width="2560" height="1720" loading="eager" decoding="async">
+                  <div class="canvas-annotation-badge">
+                    <span>✨ Bound directly to live RenderObject — updates instantly without hot reload</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 2: Figma Difference Blend -->
+              <div class="tab-panel" id="tab-diff" role="tabpanel" aria-labelledby="btn-diff">
+                <div class="canvas-image-wrap diff-interactive-wrap">
+                  <div class="diff-stage" id="diffStage">
+                    <img class="layer-base" src="assets/img/diff-a.webp" alt="Running app screen" width="1600" height="1075" decoding="async">
+                    <img class="layer-top" src="assets/img/diff-b.webp" alt="Figma difference subtraction layer" width="1600" height="1075" decoding="async">
+                  </div>
+                  <div class="diff-toolbar">
+                    <div class="diff-control-group">
+                      <span class="diff-tag">Build</span>
+                      <input class="diff-slider" type="range" min="0" max="100" value="40" id="diffSlider" aria-label="Difference intensity scrubber">
+                      <span class="diff-tag">Figma Diff</span>
+                      <span class="diff-readout" id="diffPercent">40%</span>
+                    </div>
+                    <p class="diff-hint">Drag slider: matching pixels cancel to black. Design drift glows clearly.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 3: Token Linting -->
+              <div class="tab-panel" id="tab-tokens" role="tabpanel" aria-labelledby="btn-tokens">
+                <div class="canvas-image-wrap">
+                  <img src="assets/img/token-lint.webp" alt="Vera token linting highlighting off-spec spacing and colors" width="1400" height="729" loading="lazy" decoding="async">
+                  <div class="canvas-annotation-badge">
+                    <span>🎨 Flags rogue values inline: <code>20px → spacing.lg (24)</code> with 1-tap correction</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 4: Route Jumper -->
+              <div class="tab-panel" id="tab-route" role="tabpanel" aria-labelledby="btn-route">
+                <div class="canvas-image-wrap">
+                  <img src="assets/img/canvas-route-jumper-open.png" alt="Route jumper menu allowing instant navigation across Flutter screens" width="2560" height="1720" loading="lazy" decoding="async">
+                  <div class="canvas-annotation-badge">
+                    <span>🚀 Jump to any deep screen in 1 click — includes mock arguments</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 5: AST Export -->
+              <div class="tab-panel" id="tab-export" role="tabpanel" aria-labelledby="btn-export">
+                <div class="canvas-image-wrap">
+                  <img src="assets/img/companion-live-session.png" alt="Vera Companion App recording modifications and exporting AST code patches" width="1440" height="1200" loading="lazy" decoding="async">
+                  <div class="canvas-annotation-badge">
+                    <span>📦 Clean unified diff & AST source changes written to <code>design_qa_out/</code></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= THE PROMPT LOOP VS VERA ================= -->
+    <section class="section comparison-section" id="comparison">
+      <div class="shell">
+        <div class="section-header text-center">
+          <span class="section-kicker">The Vibe Coding Dilemma</span>
+          <h2 class="section-title">Why prompting pixels breaks your flow.</h2>
+          <p class="section-desc">
+            AI is incredible at writing full features, but terrible at placing a margin by 4 pixels. 
+            Here is the loop you’re stuck in today — and how Vera deletes it.
+          </p>
         </div>
 
-        <div>
-          <div class="code-block" style="margin-top:0">
-            <pre><code>flutter pub add --dev design_qa
-dart run design_qa:init
-flutter run <span class="p">--track-widget-creation</span></code></pre>
+        <div class="comparison-grid">
+          <!-- The Painful Prompt Loop -->
+          <div class="compare-card card-pain">
+            <div class="card-status-badge badge-pain">❌ The AI Prompt Loop</div>
+            <h3 class="compare-card-title">Describing Pixels in English</h3>
+            
+            <ol class="compare-steps">
+              <li class="compare-step">
+                <span class="step-num">1</span>
+                <div>
+                  <strong>AI generates the screen</strong>
+                  <p>Cursor or Claude writes the entire Dart file in one pass.</p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">2</span>
+                <div>
+                  <strong>Visual drift slips through</strong>
+                  <p>Button padding is 18px instead of 24px. Radius is off by 2. Colors almost match.</p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">3</span>
+                <div>
+                  <strong>Write a clarifying prompt</strong>
+                  <p><em>"Make the card padding a bit larger and align the avatar to the left."</em></p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">4</span>
+                <div>
+                  <strong>Wait for rebuild & hope</strong>
+                  <p>The AI changes unrelated code, re-renders, and the padding is now 16px. Repeat.</p>
+                </div>
+              </li>
+            </ol>
+            <div class="compare-footer pain-footer">
+              Result: 15 minutes lost per screen on micro-tuning.
+            </div>
           </div>
-          <div class="feedback">
-            <h3>Tell me what breaks</h3>
+
+          <!-- The Vera Solution -->
+          <div class="compare-card card-vera">
+            <div class="card-status-badge badge-vera">⚡ The Vera Fix</div>
+            <h3 class="compare-card-title">Direct Visual Correction</h3>
+
+            <ol class="compare-steps">
+              <li class="compare-step">
+                <span class="step-num">1</span>
+                <div>
+                  <strong>Tap the widget on screen</strong>
+                  <p>Select any component on your running Flutter app or simulator.</p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">2</span>
+                <div>
+                  <strong>Live property inspector opens</strong>
+                  <p>Bound directly to its real <code>RenderObject</code>. No rebuild required.</p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">3</span>
+                <div>
+                  <strong>Scrub sliders or tap token fix</strong>
+                  <p>Drag padding to 24, pick <code>colors.primary</code> from your design tokens.</p>
+                </div>
+              </li>
+              <li class="compare-step">
+                <span class="step-num">4</span>
+                <div>
+                  <strong>Export clean AST code patch</strong>
+                  <p>Vera writes an exact Dart patch and changelog to your project directory.</p>
+                </div>
+              </li>
+            </ol>
+            <div class="compare-footer vera-footer">
+              Result: Exact fidelity in 5 seconds. Receipts kept in Git.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CORE FEATURES GRID ================= -->
+    <section class="section features-section" id="features">
+      <div class="shell">
+        <div class="section-header">
+          <span class="section-kicker">Engineered for Fidelity</span>
+          <h2 class="section-title">Everything you need to ship pixel-perfect UI.</h2>
+          <p class="section-desc">
+            Vera edits the actual running widgets on real devices. No mockups, no approximations.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-box">
+            <div class="feature-media">
+              <img src="assets/img/canvas-element-selected.png" alt="Live property editing on container widget" width="2560" height="1720" loading="lazy">
+            </div>
+            <div class="feature-info">
+              <span class="feature-pill">Live Mutation</span>
+              <h3>Tap It, Then Fix It</h3>
+              <p>
+                Select any widget to scrub padding, margins, colors, corner radius, alignments, and typography. Every adjustment renders in real-time under your finger.
+              </p>
+              <ul class="feature-checklist">
+                <li>Real <code>RenderObject</code> binding</li>
+                <li>Zero hot-reload delay</li>
+                <li>Live numeric scrubbing & keyboard steps</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-box">
+            <div class="feature-media">
+              <img src="assets/img/canvas-reference-panel-active.png" alt="Figma reference overlay difference blend mode" width="2560" height="1720" loading="lazy">
+            </div>
+            <div class="feature-info">
+              <span class="feature-pill">Pixel Verification</span>
+              <h3>Figma Overlay & Difference Mode</h3>
+              <p>
+                Pin your Figma frame directly over the running app. Use opacity sliders for quick checks or Difference Blend mode to make any pixel disagreement glow brightly.
+              </p>
+              <ul class="feature-checklist">
+                <li>Normal & Difference blend modes</li>
+                <li>Pixel-perfect alignment & scaling</li>
+                <li>Instant visual agreement verification</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-box">
+            <div class="feature-media">
+              <img src="assets/img/token-lint.webp" alt="Token linting flagging rogue values in yellow" width="1400" height="729" loading="lazy">
+            </div>
+            <div class="feature-info">
+              <span class="feature-pill">Design Systems</span>
+              <h3>Off-Token Values Flag Themselves</h3>
+              <p>
+                Vera reads your design tokens from <code>design_qa.yaml</code> and highlights rogue values in amber. If AI generated <code>padding: 22</code>, Vera offers a 1-tap fix to <code>spacing.lg (24)</code>.
+              </p>
+              <ul class="feature-checklist">
+                <li>Spacing, radius, and color linting</li>
+                <li>One-tap token normalization</li>
+                <li>Enforces your team's design system</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="feature-box">
+            <div class="feature-media">
+              <img src="assets/img/canvas-route-jumper-open.png" alt="Route jumper menu showing searchable list of screens" width="2560" height="1720" loading="lazy">
+            </div>
+            <div class="feature-info">
+              <span class="feature-pill">Navigation</span>
+              <h3>Jump Straight to Deep Screens</h3>
+              <p>
+                Don’t tap through a 4-step onboarding flow every time you need to QA a checkout confirmation. Vera scans your routes on setup and lets you jump directly with mock parameters.
+              </p>
+              <ul class="feature-checklist">
+                <li>Auto-discovered named routes & GoRouter</li>
+                <li>Fuzzy search across all screens</li>
+                <li>Pass mock arguments automatically</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMPANION APP SPOTLIGHT ================= -->
+    <section class="section companion-section" id="companion">
+      <div class="shell">
+        <div class="companion-card">
+          <div class="companion-copy">
+            <div class="pill-badge">macOS Companion App</div>
+            <h2 class="companion-title">Zero terminal required for designers.</h2>
+            <p class="companion-desc">
+              If you’re a designer or product manager who doesn't want to run shell commands, the companion macOS desktop app manages everything:
+            </p>
+            <div class="companion-steps">
+              <div class="comp-step">
+                <span class="comp-num">1</span>
+                <div><strong>Select Project</strong><p>Point to any Flutter project folder.</p></div>
+              </div>
+              <div class="comp-step">
+                <span class="comp-num">2</span>
+                <div><strong>Auto-Configure</strong><p>Vera inspects <code>main()</code> and sets up tokens safely.</p></div>
+              </div>
+              <div class="comp-step">
+                <span class="comp-num">3</span>
+                <div><strong>Launch & Export</strong><p>Picks a simulator/device, runs the app, and exports patches.</p></div>
+              </div>
+            </div>
+            <div class="companion-actions">
+              <a class="btn btn-primary" href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">
+                <span>Download macOS App</span>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 2v9M4 7l4 4 4-4M2 14h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="companion-visual">
+            <div class="companion-window">
+              <img src="assets/img/companion-project-picker.png" alt="Vera macOS Project Picker" width="1440" height="1200" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ZERO RELEASE IMPACT PROOF ================= -->
+    <section class="section proof-section">
+      <div class="shell">
+        <div class="proof-card">
+          <div class="proof-content">
+            <div class="proof-badge">🛡️ Zero Release Footprint</div>
+            <h2>Byte-for-byte identical in production builds.</h2>
             <p>
-              Especially: which widgets it fails to map, what your token setup looks
-              like, and where it guessed wrong about your project. Workflow notes from
-              people using AI to build are the most useful thing you can send:
-              <a href="https://github.com/ranjuravindran/vera_design_qa/issues">open an issue</a>.
+              <code>DesignQA.wrap</code> executes inside a <code>kDebugMode</code> guard. In release and profile builds, Flutter and Dart's AOT tree-shaker removes the entire overlay codebase completely. 
+              We measured the compiled binary directly:
             </p>
           </div>
+
+          <div class="proof-table-wrap">
+            <table class="proof-table">
+              <thead>
+                <tr>
+                  <th>Build Target (App.framework)</th>
+                  <th>Binary Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>flutter build macos --release</code> (Standard)</td>
+                  <td class="tabular">6,906,368 bytes</td>
+                </tr>
+                <tr>
+                  <td><code>flutter build macos --release</code> (With Vera)</td>
+                  <td class="tabular">6,906,368 bytes</td>
+                </tr>
+                <tr class="proof-highlight-row">
+                  <td><strong>Production Binary Difference</strong></td>
+                  <td class="tabular diff-zero"><strong>0 Bytes (Exact Match)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+    </section>
+
+    <!-- ================= QUICKSTART / INSTALL ================= -->
+    <section class="section quickstart-section" id="quickstart">
+      <div class="shell">
+        <div class="section-header text-center">
+          <span class="section-kicker">Get Started</span>
+          <h2 class="section-title">Start fixing UI in under 30 seconds.</h2>
+          <p class="section-desc">
+            Add Vera to any Flutter project. No app-code changes beyond one automated wrapper call.
+          </p>
+        </div>
+
+        <div class="quickstart-box">
+          <div class="terminal-card">
+            <div class="terminal-header">
+              <div class="window-controls">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-expand"></span>
+              </div>
+              <span class="terminal-title">Terminal — Flutter Project Directory</span>
+              <button class="copy-button" id="copySnippetBtn" type="button" aria-label="Copy commands to clipboard">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+                <span id="copyText">Copy Commands</span>
+              </button>
+            </div>
+
+            <pre class="terminal-code"><code id="codeSnippet"><span class="cmd-comment"># 1. Add Vera as a dev dependency</span>
+<span class="cmd-line">flutter pub add --dev design_qa</span>
+
+<span class="cmd-comment"># 2. Automatically wrap root widget & scan tokens (asks first)</span>
+<span class="cmd-line">dart run design_qa:init</span>
+
+<span class="cmd-comment"># 3. Run with widget creation tracking enabled</span>
+<span class="cmd-line">flutter run <span class="cmd-flag">--track-widget-creation</span></span></code></pre>
+          </div>
+
+          <div class="quickstart-note">
+            <div class="note-icon">💡</div>
+            <div class="note-body">
+              <strong>Why <code>--track-widget-creation</code>?</strong> 
+              This standard Flutter debug flag allows Vera to map any tapped widget on your screen directly back to the exact source file and line number for AST patch exports.
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-banner">
+          <h3>Ready to stop fighting design drift?</h3>
+          <p>Vera is open source (MIT). Built for modern Flutter teams and vibe coders.</p>
+          <div class="cta-banner-actions">
+            <a class="btn btn-primary btn-lg" href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">
+              <span>View on GitHub</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 3h7v7M13 3 3.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="https://github.com/ranjuravindran/vera_design_qa/issues" target="_blank" rel="noopener noreferrer">
+              <span>Submit Feedback / Issues</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="shell footer-shell">
+      <div class="footer-brand">
+        <img src="assets/img/vera-logo-horizontal.png" alt="Vera" width="100" height="33" class="footer-logo">
+        <p class="footer-tagline">Fix the design, not the prompt.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/ranjuravindran/vera_design_qa/blob/main/doc/design_qa_yaml_reference.md" target="_blank" rel="noopener noreferrer">YAML Config</a>
+        <a href="https://github.com/ranjuravindran/vera_design_qa/blob/main/doc/limitations.md" target="_blank" rel="noopener noreferrer">Limitations</a>
+        <a href="https://github.com/ranjuravindran/vera_design_qa/issues" target="_blank" rel="noopener noreferrer">Issues & Feedback</a>
+      </div>
+
+      <div class="footer-copy">
+        <span>MIT Licensed · Designed for Flutter</span>
+      </div>
     </div>
-  </section>
+  </footer>
 
-</main>
-
-<footer class="site-footer">
-  <div class="shell">
-    <span class="footer-truth">Vera · vera, verum — true</span>
-    <span>
-      <a href="https://github.com/ranjuravindran/vera_design_qa">GitHub</a>
-      &nbsp;·&nbsp;
-      <a href="https://github.com/ranjuravindran/vera_design_qa/issues">Issues</a>
-    </span>
-  </div>
-</footer>
-
-<script src="assets/site.js" defer></script>
-<script>
-  if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-        }
-      });
-    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
-    
-    document.querySelectorAll('.problem, .demo, .feature, .step, .start-grid > div').forEach((el) => {
-      observer.observe(el);
-    });
-  }
-</script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>

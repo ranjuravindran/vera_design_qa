@@ -1,6 +1,6 @@
 /* ============================================================
    VERA — Official Landing Page Stylesheet
-   Full Light & Dark Theme Support + True One-Fold Split Layout
+   Pixel-Perfect Layout, Seamless Windows, Light/Dark Theme
    ============================================================ */
 
 /* ---------- Self-Hosted Fonts ---------- */
@@ -37,14 +37,14 @@
 /* ---------- Theme Color Tokens ---------- */
 :root,
 [data-theme="dark"] {
-  --bg-main: #060a14;
-  --bg-surface: #0b1220;
-  --bg-card: #10182b;
-  --bg-card-hover: #152038;
-  --bg-glass: rgba(9, 15, 26, 0.88);
+  --bg-main: #070c18;
+  --bg-surface: #0c1424;
+  --bg-card: #111b2e;
+  --bg-card-hover: #16243d;
+  --bg-glass: rgba(10, 17, 30, 0.88);
   --bg-window-chrome: #090e1c;
-  --bg-table-wrap: #000000;
-  --bg-terminal: #080d19;
+  --bg-table-wrap: #03060c;
+  --bg-terminal: #070d1a;
 
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.16);
@@ -67,7 +67,7 @@
   --text-dim: #475569;
 
   --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.5);
-  --shadow-elevated: 0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 157, 255, 0.05);
+  --shadow-elevated: 0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 157, 255, 0.06);
 
   --canvas-particle-cyan: rgba(0, 157, 255,;
   --canvas-particle-amber: rgba(245, 158, 11,;
@@ -75,11 +75,11 @@
 }
 
 [data-theme="light"] {
-  --bg-main: #f4f6fa;
+  --bg-main: #f5f7fb;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #f8fafc;
-  --bg-glass: rgba(244, 246, 250, 0.9);
+  --bg-glass: rgba(245, 247, 251, 0.92);
   --bg-window-chrome: #eef2f8;
   --bg-table-wrap: #f8fafc;
   --bg-terminal: #0b1220;
@@ -117,7 +117,7 @@
   --font-body: 'Plex', system-ui, -apple-system, sans-serif;
   --font-mono: 'PlexMono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --shell-max: 1160px;
+  --shell-max: 1180px;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
@@ -149,11 +149,13 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ---------- Dynamic Logo Switching via CSS ---------- */
-[data-theme="dark"] .logo-light-theme { display: none !important; }
-[data-theme="dark"] .logo-dark-theme { display: block !important; }
-[data-theme="light"] .logo-dark-theme { display: none !important; }
-[data-theme="light"] .logo-light-theme { display: block !important; }
+/* ---------- Header, Main, Footer Layering ---------- */
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
 
 /* ---------- Ambient Background Canvas Shader ---------- */
 .ambient-canvas {
@@ -162,13 +164,18 @@ body {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
   opacity: 0.75;
 }
 
+/* ---------- Dynamic Logo Switching via CSS ---------- */
+[data-theme="dark"] .logo-light-theme { display: none !important; }
+[data-theme="dark"] .logo-dark-theme { display: block !important; }
+[data-theme="light"] .logo-dark-theme { display: none !important; }
+[data-theme="light"] .logo-light-theme { display: block !important; }
+
 img, video {
   max-width: 100%;
-  height: auto;
   display: block;
 }
 
@@ -223,17 +230,17 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--signal);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
   font-weight: 800;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
 }
 
 .section-desc {
-  font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+  font-size: clamp(0.9rem, 1.35vw, 1.02rem);
   color: var(--text-secondary);
   max-width: 38rem;
   margin-inline: auto;
@@ -241,11 +248,11 @@ p {
 }
 
 .section-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 .section {
-  padding-block: clamp(2.5rem, 4.5vw, 4rem);
+  padding-block: clamp(2.5rem, 4vw, 3.75rem);
   position: relative;
 }
 
@@ -377,7 +384,7 @@ p {
 }
 
 .brand-logo {
-  height: 32px;
+  height: 34px;
   width: auto;
   object-fit: contain;
 }
@@ -421,18 +428,18 @@ p {
 
 /* ================= TRUE ONE-FOLD SPLIT HERO ================= */
 .hero-one-fold {
-  min-height: calc(100vh - 62px);
+  min-height: calc(100vh - 65px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block: 1rem 1.5rem;
+  padding-block: 1.5rem;
   position: relative;
 }
 
 .hero-split-grid {
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: 1fr 1.28fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: center;
   width: 100%;
 }
@@ -577,6 +584,8 @@ p {
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
 }
 
 .window-header {
@@ -586,6 +595,7 @@ p {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
 }
 
 .window-controls {
@@ -620,8 +630,8 @@ p {
 .window-body {
   position: relative;
   background: #000;
-  height: 380px;
-  max-height: 420px;
+  aspect-ratio: 16 / 10.75;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -629,11 +639,12 @@ p {
   display: none;
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
+  inset: 0;
 }
 .tab-panel.is-active {
   display: block;
-  animation: fadeInPanel 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeInPanel 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeInPanel {
@@ -645,12 +656,13 @@ p {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .canvas-image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  background: #040711;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .canvas-annotation-badge {
@@ -680,11 +692,14 @@ p {
 .diff-interactive-wrap {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 .diff-stage {
   position: relative;
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   background: #000;
   overflow: hidden;
   isolation: isolate;
@@ -694,7 +709,8 @@ p {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: top center;
 }
 .diff-stage .layer-top {
   mix-blend-mode: difference;
@@ -710,6 +726,7 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 .diff-control-group {
@@ -913,7 +930,8 @@ p {
 
 .feature-media {
   background: #000;
-  height: 185px;
+  aspect-ratio: 16 / 10;
+  width: 100%;
   overflow: hidden;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -1246,7 +1264,7 @@ p {
   gap: 0.3rem;
 }
 .footer-logo {
-  height: 24px;
+  height: 26px;
   width: auto;
   object-fit: contain;
 }
@@ -1292,9 +1310,6 @@ p {
   .hero-one-fold {
     min-height: auto;
     padding-top: 2rem;
-  }
-  .window-body {
-    height: 340px;
   }
 }
 

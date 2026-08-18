@@ -1,5 +1,5 @@
 /* ============================================================
-   VERA — Official Interactive Logic, Theme Engine & Shader
+   VERA — Official Interactive Logic & Dynamic 3D Physics
    ============================================================ */
 
 (function () {
@@ -15,15 +15,14 @@
   function getPreferredTheme() {
     var stored = localStorage.getItem('vera-theme');
     if (stored) return stored;
-    // Default to dark mode unconditionally as preferred design
-    return 'dark';
+    return 'dark'; // Always default to dark mode
   }
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     localStorage.setItem('vera-theme', theme);
     if (themeMeta) {
-      themeMeta.setAttribute('content', theme === 'dark' ? '#070c18' : '#f5f7fb');
+      themeMeta.setAttribute('content', theme === 'dark' ? '#080d1a' : '#f8fafc');
     }
   }
 
@@ -44,7 +43,7 @@
     var ctx = canvas.getContext('2d');
     var width, height, dpr;
     var particles = [];
-    var particleCount = 38;
+    var particleCount = 36;
     var mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
     var isVisible = true;
 
@@ -63,11 +62,11 @@
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
           radius: Math.random() * 2 + 1.2,
-          baseAlpha: Math.random() * 0.4 + 0.2,
-          colorType: Math.random() > 0.35 ? 'cyan' : 'amber'
+          baseAlpha: Math.random() * 0.35 + 0.15,
+          colorType: Math.random() > 0.4 ? 'sky' : 'gold'
         });
       }
     }
@@ -99,13 +98,13 @@
       ctx.clearRect(0, 0, width, height);
 
       var isDark = root.getAttribute('data-theme') !== 'light';
-      var cyanColor = isDark ? 'rgba(0, 157, 255,' : 'rgba(0, 136, 223,';
-      var amberColor = isDark ? 'rgba(245, 158, 11,' : 'rgba(217, 119, 6,';
+      var skyColor = isDark ? 'rgba(56, 189, 248,' : 'rgba(2, 132, 199,';
+      var goldColor = 'rgba(245, 136, 5,';
 
-      // Mouse interactive radial glow
+      // Mouse interactive ambient field
       if (mouse.x > 0 && mouse.y > 0) {
-        var grad = ctx.createRadialGradient(mouse.x, mouse.y, 10, mouse.x, mouse.y, 340);
-        grad.addColorStop(0, isDark ? 'rgba(0, 157, 255, 0.09)' : 'rgba(0, 136, 223, 0.06)');
+        var grad = ctx.createRadialGradient(mouse.x, mouse.y, 10, mouse.x, mouse.y, 320);
+        grad.addColorStop(0, isDark ? 'rgba(56, 189, 248, 0.08)' : 'rgba(2, 132, 199, 0.05)');
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
@@ -122,25 +121,24 @@
         if (p.y < -10) p.y = height + 10;
         if (p.y > height + 10) p.y = -10;
 
-        var colorPrefix = p.colorType === 'cyan' ? cyanColor : amberColor;
+        var colorPrefix = p.colorType === 'sky' ? skyColor : goldColor;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = colorPrefix + p.baseAlpha + ')';
         ctx.fill();
 
-        // Connect nearby particles
         for (var j = i + 1; j < particles.length; j++) {
           var p2 = particles[j];
           var dx = p.x - p2.x;
           var dy = p.y - p2.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 125) {
-            var alpha = (1 - dist / 125) * 0.16;
+          if (dist < 120) {
+            var alpha = (1 - dist / 120) * 0.14;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = cyanColor + alpha + ')';
+            ctx.strokeStyle = skyColor + alpha + ')';
             ctx.lineWidth = 0.75;
             ctx.stroke();
           }
@@ -153,11 +151,11 @@
     requestAnimationFrame(render);
   }
 
-  /* ================= 3. 3D TILT EFFECT ON HOVER ================= */
+  /* ================= 3. DYNAMIC 3D PERSPECTIVE TILT & REALISTIC SHADOW ================= */
   if (!reducedMotion) {
     var tiltCards = document.querySelectorAll('.tilt-card');
     tiltCards.forEach(function (card) {
-      var maxTilt = parseFloat(card.getAttribute('data-tilt')) || 4;
+      var maxTilt = parseFloat(card.getAttribute('data-tilt')) || 3.5;
 
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
@@ -169,11 +167,19 @@
         var rotateX = ((y - centerY) / centerY) * -maxTilt;
         var rotateY = ((x - centerX) / centerX) * maxTilt;
 
+        // Dynamic solid 3D shadow strictly matching the element's exact computed stroke/border color
+        var shadowOffsetX = (-rotateY * 1.5).toFixed(0);
+        var shadowOffsetY = (rotateX * 1.5 + 4).toFixed(0);
+        var computedStyle = window.getComputedStyle(card);
+        var strokeColor = computedStyle.borderTopColor || computedStyle.borderColor;
+
         card.style.transform = 'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) translateY(-2px)';
+        card.style.boxShadow = shadowOffsetX + 'px ' + shadowOffsetY + 'px 0 ' + strokeColor;
       });
 
       card.addEventListener('mouseleave', function () {
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+        card.style.boxShadow = '';
       });
     });
   }
@@ -186,7 +192,7 @@
         var rect = btn.getBoundingClientRect();
         var x = e.clientX - rect.left - rect.width / 2;
         var y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = 'translate(' + (x * 0.18).toFixed(1) + 'px, ' + (y * 0.18).toFixed(1) + 'px)';
+        btn.style.transform = 'translate(' + (x * 0.16).toFixed(1) + 'px, ' + (y * 0.16).toFixed(1) + 'px)';
       });
 
       btn.addEventListener('mouseleave', function () {
@@ -195,9 +201,9 @@
     });
   }
 
-  /* ================= 5. SHOWCASE TAB SWITCHER ================= */
-  var tabButtons = document.querySelectorAll('.tab-btn');
-  var tabPanels = document.querySelectorAll('.tab-panel');
+  /* ================= 5. HERO SHOWCASE TABS ================= */
+  var tabButtons = document.querySelectorAll('.showcase-tabs .tab-btn');
+  var tabPanels = document.querySelectorAll('.window-body .tab-panel');
 
   tabButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -222,7 +228,34 @@
     });
   });
 
-  /* ================= 6. FIGMA DIFFERENCE SLIDER ================= */
+  /* ================= 6. INTERACTIVE FEATURE SPOTLIGHT TABS ================= */
+  var featureBtns = document.querySelectorAll('.feature-item-btn');
+  var featurePanels = document.querySelectorAll('.feature-panel');
+
+  featureBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var targetFeature = btn.getAttribute('data-feature');
+      if (!targetFeature) return;
+
+      featureBtns.forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      featurePanels.forEach(function (p) {
+        p.classList.remove('is-active');
+      });
+
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      var targetPanel = document.getElementById(targetFeature);
+      if (targetPanel) {
+        targetPanel.classList.add('is-active');
+      }
+    });
+  });
+
+  /* ================= 7. FIGMA DIFFERENCE SLIDER ================= */
   var diffSlider = document.getElementById('diffSlider');
   var diffPercent = document.getElementById('diffPercent');
   var diffStage = document.getElementById('diffStage');
@@ -238,7 +271,6 @@
     diffSlider.addEventListener('input', updateDiff);
     updateDiff();
 
-    // Auto animate on scroll into view
     if ('IntersectionObserver' in window && !reducedMotion) {
       var diffAnimated = false;
       var observer = new IntersectionObserver(function (entries) {
@@ -272,7 +304,7 @@
     }
   }
 
-  /* ================= 7. TERMINAL SNIPPET COPY ================= */
+  /* ================= 8. TERMINAL SNIPPET COPY ================= */
   var copyBtn = document.getElementById('copySnippetBtn');
   var copyText = document.getElementById('copyText');
   var snippetElem = document.getElementById('codeSnippet');
@@ -304,21 +336,13 @@
     });
   }
 
-  /* ================= 8. HEADER SHADOW & ACTIVE NAV SPY ================= */
+  /* ================= 9. ACTIVE NAV SCROLLSPY (Solid Fill Squircle) ================= */
   var header = document.getElementById('header');
   var navLinks = document.querySelectorAll('.site-nav .nav-link');
   var sections = document.querySelectorAll('section[id]');
 
   function updateNavSpy() {
-    if (header) {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = 'var(--shadow-subtle)';
-      } else {
-        header.style.boxShadow = 'none';
-      }
-    }
-
-    var scrollPos = window.scrollY + 130;
+    var scrollPos = window.scrollY + 140;
     var currentId = '';
 
     sections.forEach(function (section) {
@@ -329,16 +353,18 @@
       }
     });
 
-    navLinks.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (href === '#' + currentId) {
-        link.classList.add('is-active');
-        link.setAttribute('aria-current', 'page');
-      } else {
-        link.classList.remove('is-active');
-        link.removeAttribute('aria-current');
-      }
-    });
+    if (currentId) {
+      navLinks.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === '#' + currentId) {
+          link.classList.add('is-active');
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.classList.remove('is-active');
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
   }
 
   window.addEventListener('scroll', updateNavSpy, { passive: true });

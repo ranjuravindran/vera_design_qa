@@ -8,7 +8,7 @@
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <meta name="theme-color" content="#070c18" id="themeColorMeta">
+  <meta name="theme-color" content="#080d1a" id="themeColorMeta">
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:title" content="Vera — Fix the Design, Not the Prompt">
@@ -25,12 +25,12 @@
 </head>
 <body>
 
-  <!-- Ambient Dynamic Shader Background -->
+  <!-- Ambient Dynamic Canvas Shader -->
   <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
 
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- ================= TOP NAVIGATION ================= -->
+  <!-- ================= TOP NAVIGATION (Squircle Slavic Bar) ================= -->
   <header class="site-header" id="header">
     <div class="shell header-shell">
       <a class="brand-link" href="#top" aria-label="Vera Home">
@@ -41,7 +41,7 @@
       </a>
 
       <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="#top" class="nav-link">Interactive Demo</a>
+        <a href="#top" class="nav-link is-active" aria-current="page">Interactive Demo</a>
         <a href="#comparison" class="nav-link">The Workflow</a>
         <a href="#features" class="nav-link">Features</a>
         <a href="#companion" class="nav-link">macOS App</a>
@@ -52,7 +52,7 @@
         <!-- Light / Dark Theme Switcher Button -->
         <button class="theme-toggle-btn" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
           <!-- Sun Icon (shown in dark mode) -->
-          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -64,7 +64,7 @@
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
           <!-- Moon Icon (shown in light mode) -->
-          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
@@ -78,7 +78,7 @@
         <a class="btn btn-primary btn-sm" href="#quickstart">
           <span>Get Started</span>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
       </div>
@@ -95,7 +95,7 @@
           <!-- Left Column: Copy & Actions -->
           <div class="hero-col-copy">
             <div class="pill-badge">
-              <span class="pill-dot"></span>
+              <span class="badge-pencil-icon" aria-hidden="true">✏️</span>
               <span>Built for Designers & Vibe Coders</span>
             </div>
 
@@ -112,7 +112,7 @@
               <a class="btn btn-primary btn-lg magnetic-btn" href="#quickstart">
                 <span>Install in 30s</span>
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
               <a class="btn btn-ghost btn-lg" href="#comparison">
@@ -138,7 +138,7 @@
 
           <!-- Right Column: Interactive Showcase Window -->
           <div class="hero-col-showcase">
-            <div class="showcase-container tilt-card" data-tilt="3">
+            <div class="showcase-container tilt-card" data-tilt="4">
               
               <!-- Interactive Tab Bar -->
               <div class="showcase-tabs" role="tablist" aria-label="Showcase Tabs">
@@ -164,7 +164,7 @@
                 </button>
               </div>
 
-              <!-- Window Frame (No fake duplicate titlebars; uses authentic app chrome) -->
+              <!-- Window Frame (Authentic Native Frame) -->
               <div class="window-frame">
                 <div class="window-body">
                   <!-- Panel 1: Inspect -->
@@ -249,7 +249,7 @@
 
         <div class="comparison-grid">
           <!-- The Painful Prompt Loop -->
-          <div class="compare-card card-pain tilt-card" data-tilt="4">
+          <div class="compare-card card-pain tilt-card" data-tilt="3">
             <div class="card-status-badge badge-pain">❌ The AI Prompt Loop</div>
             <h3 class="compare-card-title">Describing Pixels in English</h3>
             
@@ -289,7 +289,7 @@
           </div>
 
           <!-- The Vera Solution -->
-          <div class="compare-card card-vera tilt-card" data-tilt="4">
+          <div class="compare-card card-vera tilt-card" data-tilt="3">
             <div class="card-status-badge badge-vera">⚡ The Vera Fix</div>
             <h3 class="compare-card-title">Direct Visual Correction</h3>
 
@@ -331,7 +331,7 @@
       </div>
     </section>
 
-    <!-- ================= CORE FEATURES GRID ================= -->
+    <!-- ================= INTERACTIVE FEATURE SPOTLIGHT ================= -->
     <section class="section features-section" id="features">
       <div class="shell">
         <div class="section-header text-center">
@@ -342,80 +342,87 @@
           </p>
         </div>
 
-        <div class="features-grid">
-          <!-- Feature 1: Live Mutation -->
-          <div class="feature-box tilt-card" data-tilt="3">
-            <div class="feature-media">
-              <img src="assets/img/canvas-element-selected.png" alt="Live property editing on container widget" width="2560" height="1720" loading="lazy">
-            </div>
-            <div class="feature-info">
-              <span class="feature-pill">Live Mutation</span>
-              <h3>Tap It, Then Fix It</h3>
-              <p>
-                Select any widget to scrub padding, margins, colors, corner radius, alignments, and typography in real time.
-              </p>
-              <ul class="feature-checklist">
-                <li>Real <code>RenderObject</code> binding</li>
-                <li>Zero hot-reload delay</li>
-                <li>Live numeric scrubbing & keyboard steps</li>
-              </ul>
-            </div>
+        <div class="feature-spotlight-grid">
+          <!-- Left: 4 Interactive Feature Tab Items -->
+          <div class="feature-spotlight-list" role="tablist" aria-label="Feature Tabs">
+            <button class="feature-item-btn is-active" role="tab" aria-selected="true" data-feature="feat-inspect" id="btn-feat-inspect">
+              <div class="feat-item-header">
+                <span class="feat-item-badge">Live Mutation</span>
+                <span class="feat-item-num">01</span>
+              </div>
+              <h3 class="feat-item-title">Tap It, Then Fix It</h3>
+              <p class="feat-item-desc">Select any widget on screen to scrub padding, margins, colors, and typography directly.</p>
+            </button>
+
+            <button class="feature-item-btn" role="tab" aria-selected="false" data-feature="feat-diff" id="btn-feat-diff">
+              <div class="feat-item-header">
+                <span class="feat-item-badge">Pixel Verification</span>
+                <span class="feat-item-num">02</span>
+              </div>
+              <h3 class="feat-item-title">Figma Overlay & Difference Mode</h3>
+              <p class="feat-item-desc">Pin your Figma frame over the app. Difference blend makes any sub-pixel drift glow instantly.</p>
+            </button>
+
+            <button class="feature-item-btn" role="tab" aria-selected="false" data-feature="feat-tokens" id="btn-feat-tokens">
+              <div class="feat-item-header">
+                <span class="feat-item-badge">Design Systems</span>
+                <span class="feat-item-num">03</span>
+              </div>
+              <h3 class="feat-item-title">Off-Token Values Flag Themselves</h3>
+              <p class="feat-item-desc">Reads <code>design_qa.yaml</code> and highlights rogue values in amber with 1-tap token normalization.</p>
+            </button>
+
+            <button class="feature-item-btn" role="tab" aria-selected="false" data-feature="feat-ast" id="btn-feat-ast">
+              <div class="feat-item-header">
+                <span class="feat-item-badge">AST Code Generation</span>
+                <span class="feat-item-num">04</span>
+              </div>
+              <h3 class="feat-item-title">Export Real Dart Patches</h3>
+              <p class="feat-item-desc">Every edit is rewritten at the Dart AST level, producing clean unified diffs for Git or Claude.</p>
+            </button>
           </div>
 
-          <!-- Feature 2: Figma Overlay -->
-          <div class="feature-box tilt-card" data-tilt="3">
-            <div class="feature-media">
-              <img src="assets/img/canvas-reference-panel-active.png" alt="Figma reference overlay difference blend mode" width="2560" height="1720" loading="lazy">
-            </div>
-            <div class="feature-info">
-              <span class="feature-pill">Pixel Verification</span>
-              <h3>Figma Overlay & Difference Mode</h3>
-              <p>
-                Pin your Figma frame directly over the running app. Difference Blend mode makes any pixel discrepancy glow brightly.
-              </p>
-              <ul class="feature-checklist">
-                <li>Normal & Difference blend modes</li>
-                <li>Pixel-perfect alignment & scaling</li>
-                <li>Instant visual agreement verification</li>
-              </ul>
-            </div>
-          </div>
+          <!-- Right: Synchronized Feature Display Stage -->
+          <div class="feature-spotlight-display">
+            <div class="feature-display-frame tilt-card" data-tilt="2">
+              <div class="feature-frame-header">
+                <div class="window-controls">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-expand"></span>
+                </div>
+                <span class="feature-frame-title">Vera Live Canvas</span>
+              </div>
 
-          <!-- Feature 3: Design Tokens (Authentic Screenshot) -->
-          <div class="feature-box tilt-card" data-tilt="3">
-            <div class="feature-media">
-              <img src="assets/img/token-lint.webp" alt="Design system token linting in action" width="1400" height="729" loading="lazy">
-            </div>
-            <div class="feature-info">
-              <span class="feature-pill">Design Systems</span>
-              <h3>Off-Token Values Flag Themselves</h3>
-              <p>
-                Vera reads your design tokens from <code>design_qa.yaml</code> and highlights rogue values in amber with 1-tap fixes.
-              </p>
-              <ul class="feature-checklist">
-                <li>Spacing, radius, and color linting</li>
-                <li>One-tap token normalization</li>
-                <li>Enforces your team's design system</li>
-              </ul>
-            </div>
-          </div>
+              <div class="feature-frame-body">
+                <div class="feature-panel is-active" id="feat-inspect" role="tabpanel" aria-labelledby="btn-feat-inspect">
+                  <img src="assets/img/canvas-element-selected.png" alt="Live property editing on container widget" width="2560" height="1720" loading="lazy">
+                  <div class="feature-display-caption">
+                    <span>✨ <strong>Real RenderObject binding</strong> · Zero hot-reload delay</span>
+                  </div>
+                </div>
 
-          <!-- Feature 4: AST Patches (Authentic Screenshot) -->
-          <div class="feature-box tilt-card" data-tilt="3">
-            <div class="feature-media">
-              <img src="assets/img/patch-export.webp" alt="AST code unified diff export" width="1400" height="1167" loading="lazy">
-            </div>
-            <div class="feature-info">
-              <span class="feature-pill">AST Code Generation</span>
-              <h3>Export Real Dart Patches</h3>
-              <p>
-                Every edit is recorded and rewritten at the Dart Abstract Syntax Tree (AST) level—preserving your code structure and comments.
-              </p>
-              <ul class="feature-checklist">
-                <li>AST-level Dart source rewrites</li>
-                <li>Clean unified diffs in <code>design_qa_out/</code></li>
-                <li>Pass directly to Claude Code or Git</li>
-              </ul>
+                <div class="feature-panel" id="feat-diff" role="tabpanel" aria-labelledby="btn-feat-diff">
+                  <img src="assets/img/canvas-reference-panel-active.png" alt="Figma reference overlay difference blend mode" width="2560" height="1720" loading="lazy">
+                  <div class="feature-display-caption">
+                    <span>📐 <strong>Normal & Difference blend modes</strong> · Instant alignment verification</span>
+                  </div>
+                </div>
+
+                <div class="feature-panel" id="feat-tokens" role="tabpanel" aria-labelledby="btn-feat-tokens">
+                  <img src="assets/img/token-lint.webp" alt="Design system token linting" width="1400" height="729" loading="lazy">
+                  <div class="feature-display-caption">
+                    <span>🎨 <strong>One-tap token normalization</strong> · Enforces your design system</span>
+                  </div>
+                </div>
+
+                <div class="feature-panel" id="feat-ast" role="tabpanel" aria-labelledby="btn-feat-ast">
+                  <img src="assets/img/patch-export.webp" alt="AST code unified diff export" width="1400" height="1167" loading="lazy">
+                  <div class="feature-display-caption">
+                    <span>📝 <strong>Clean unified diffs</strong> in <code>design_qa_out/</code></span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -427,7 +434,10 @@
       <div class="shell">
         <div class="companion-card tilt-card" data-tilt="3">
           <div class="companion-copy">
-            <div class="pill-badge">macOS Companion App</div>
+            <div class="pill-badge">
+              <span class="badge-pencil-icon" aria-hidden="true">💻</span>
+              <span>macOS Companion App</span>
+            </div>
             <h2 class="companion-title">Zero terminal required for designers.</h2>
             <p class="companion-desc">
               If you’re a designer or product manager who doesn't want to run shell commands, the companion macOS app automates the entire review cycle:
@@ -450,7 +460,7 @@
               <a class="btn btn-primary magnetic-btn" href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">
                 <span>Download macOS App</span>
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M8 2v9M4 7l4 4 4-4M2 14h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8 2v9M4 7l4 4 4-4M2 14h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
             </div>
@@ -556,13 +566,14 @@
 
         <!-- Call to Action Banner -->
         <div class="cta-banner tilt-card" data-tilt="2">
+          <div class="cta-pencil-badge" aria-hidden="true">✏️</div>
           <h3>Ready to stop fighting design drift?</h3>
           <p>Vera is open source (MIT). Built for modern Flutter teams and vibe coders.</p>
           <div class="cta-banner-actions">
             <a class="btn btn-primary btn-lg magnetic-btn" href="https://github.com/ranjuravindran/vera_design_qa" target="_blank" rel="noopener noreferrer">
               <span>View on GitHub</span>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M6 3h7v7M13 3 3.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 3h7v7M13 3 3.5 12.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
             <a class="btn btn-ghost btn-lg" href="https://github.com/ranjuravindran/vera_design_qa/issues" target="_blank" rel="noopener noreferrer">

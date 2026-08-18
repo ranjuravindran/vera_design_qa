@@ -170,7 +170,7 @@
                   <!-- Panel 1: Inspect -->
                   <div class="tab-panel is-active" id="tab-inspect" role="tabpanel" aria-labelledby="btn-inspect">
                     <div class="canvas-image-wrap">
-                      <img src="assets/img/canvas-element-selected.png" alt="Vera Live Inspection Mode" width="2560" height="1720" loading="eager" decoding="async">
+                      <img src="assets/img/inspect.png" alt="Vera Live Inspection Mode" width="2656" height="1660" loading="eager" decoding="async">
                       <div class="canvas-annotation-badge">
                         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8h3l1.5-4 3 8 1.5-4h3"/></svg>
                         <span>Bound to the live RenderObject, rebuild-free</span>
@@ -211,7 +211,7 @@
                   <!-- Panel 4: Routes -->
                   <div class="tab-panel" id="tab-route" role="tabpanel" aria-labelledby="btn-route">
                     <div class="canvas-image-wrap">
-                      <img src="assets/img/canvas-route-jumper-open.png" alt="Route jumper menu" width="2560" height="1720" loading="lazy" decoding="async">
+                      <img src="assets/img/route-jump.png" alt="Route jumper menu" width="2656" height="1660" loading="lazy" decoding="async">
                       <div class="canvas-annotation-badge">
                         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 14.5s5-4.2 5-8a5 5 0 1 0-10 0c0 3.8 5 8 5 8z"/><circle cx="8" cy="6.5" r="1.7"/></svg>
                         <span>Jump to deep screens with mock arguments</span>
@@ -222,7 +222,7 @@
                   <!-- Panel 5: Export -->
                   <div class="tab-panel" id="tab-export" role="tabpanel" aria-labelledby="btn-export">
                     <div class="canvas-image-wrap">
-                      <img src="assets/img/companion-live-session.png" alt="Vera Companion App recording modifications" width="1440" height="1200" loading="lazy" decoding="async">
+                      <img src="assets/img/export.png" alt="Vera Companion App recording modifications" width="1600" height="1000" loading="lazy" decoding="async">
                       <div class="canvas-annotation-badge">
                         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 14 4.5v7L8 14.5 2 11.5v-7z"/><path d="M2 4.5 8 7.5l6-3M8 7.5v7"/></svg>
                         <span>Clean AST patches written to <code>design_qa_out/</code></span>
@@ -404,14 +404,14 @@
 
               <div class="feature-frame-body">
                 <div class="feature-panel is-active" id="feat-inspect" role="tabpanel" aria-labelledby="btn-feat-inspect">
-                  <img src="assets/img/canvas-element-selected.png" alt="Live property editing on container widget" width="2560" height="1720" loading="lazy">
+                  <img src="assets/img/inspect.png" alt="Live property editing on container widget" width="2656" height="1660" loading="lazy">
                   <div class="feature-display-caption">
                     <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8h3l1.5-4 3 8 1.5-4h3"/></svg> <strong>Real RenderObject binding</strong> · Zero hot-reload delay</span>
                   </div>
                 </div>
 
                 <div class="feature-panel" id="feat-diff" role="tabpanel" aria-labelledby="btn-feat-diff">
-                  <img src="assets/img/canvas-reference-panel-active.png" alt="Figma reference overlay difference blend mode" width="2560" height="1720" loading="lazy">
+                  <img src="assets/img/figma-diff.png" alt="Figma reference overlay difference blend mode" width="2656" height="1660" loading="lazy">
                   <div class="feature-display-caption">
                     <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 14 5 8 8.5 2 5z"/><path d="M2 8.5 8 12l6-3.5" stroke-linecap="round"/><path d="M2 11 8 14.5 14 11" stroke-linecap="round"/></svg> <strong>Normal & Difference blend modes</strong> · Instant alignment verification</span>
                   </div>
@@ -425,7 +425,7 @@
                 </div>
 
                 <div class="feature-panel" id="feat-ast" role="tabpanel" aria-labelledby="btn-feat-ast">
-                  <img src="assets/img/patch-export.webp" alt="AST code unified diff export" width="1400" height="1167" loading="lazy">
+                  <img src="assets/img/export.png" alt="AST code unified diff export" width="1600" height="1000" loading="lazy">
                   <div class="feature-display-caption">
                     <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.5h5l3 3v10H4z"/><path d="M9 1.5v3h3"/><path d="M6 9.5h4M6 11.8h4"/></svg> <strong>Clean unified diffs</strong> in <code>design_qa_out/</code></span>
                   </div>
@@ -576,7 +576,7 @@
 
         <!-- Call to Action Banner -->
         <div class="cta-banner tilt-card" data-tilt="2">
-          <div class="cta-pencil-badge" aria-hidden="true">✏️</div>
+          <div class="cta-pencil-badge" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2l3 3-8.5 8.5L2 14l.5-3.5z"/></svg></div>
           <h3>Ready to stop fighting design drift?</h3>
           <p>Vera is open source (MIT). Built for modern Flutter teams and vibe coders.</p>
           <div class="cta-banner-actions">
